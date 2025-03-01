@@ -5,10 +5,13 @@ module.exports = (req, res, next) => {
   if (!token) return res.status(401).json({ message: "Accès refusé" });
 
   try {
+    const decodedToken = jwt.decode(token); 
+    console.log("Decoded Token:", decodedToken);
+
     const decoded = jwt.verify(token.replace("Bearer ", ""), process.env.JWT_SECRET);
-    req.user = decoded;
+    req.user = { id: decoded.userId };
     next();
-  } catch {
-    res.status(401).json({ message: "Token invalide" });
+  } catch (error) {
+    res.status(401).json({ message: "Token invalide", error: error.message });
   }
 };

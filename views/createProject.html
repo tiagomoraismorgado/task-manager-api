@@ -234,8 +234,8 @@
           </div>
         </div>
         <!-- row  -->
-        <div class="row mt-6">
-          <div class="col-md-12 col-12">
+        <div class="row">
+          <div class="col-xl-9 col-md-12 col-12">
             <!-- card  -->
             <div class="card">
               <!-- card header  -->
@@ -243,41 +243,132 @@
                 <h4 class="mb-0">New Projects</h4>
               </div>
               <!-- table  -->
-              <div class="table-responsive">
-    
+              <div class="card-body bg-white border-bottom-0 py-4">
+                <!-- Validation Form -->
+                <form id="projectForm" class="row g-3 needs-validation" novalidate>
+                  <div class="mb-3">
+                    <label class="form-label" for="textInput">Name</label>
+                    <input type="text" id="textInput" name="name" class="form-control" placeholder="Enter project title"
+                      required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="textarea-input" class="form-label">Description</label>
+                    <textarea class="form-control" id="textarea-input" name="description" rows="5"
+                      placeholder="Type something here"></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="startDate" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="startDate" name="start_date" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="endDate" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="endDate" name="end_date" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="priority" class="form-label">Priority</label>
+                    <select class="form-select" id="priority" name="priority" required>
+                      <option selected disabled value="">Set Priority</option>
+                      <option>High</option>
+                      <option>Medium</option>
+                      <option>Low</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="state" class="form-label">State</label>
+                    <select class="form-select" id="state" name="status" required>
+                      <option selected disabled value="">Set Status</option>
+                      <option>Ongoing</option>
+                      <option>Completed</option>
+                      <option>Cancelled</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                  </div>
+                </form>
+                <script>
+                  document.getElementById("projectForm").addEventListener("submit", async function (event) {
+                    event.preventDefault();
+                
+                    const token = localStorage.getItem("token");
+                
+                    const formData = {
+                      name: document.getElementById("textInput").value,
+                      description: document.getElementById("textarea-input").value,
+                      start_date: document.getElementById("startDate").value,
+                      end_date: document.getElementById("endDate").value,
+                      priority: document.getElementById("priority").value,
+                      status: document.getElementById("state").value,
+                    };
+                
+                    const response = await fetch("/api/projects/new", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                      },
+                      body: JSON.stringify(formData),
+                    });
+                
+                    const result = await response.json();
+                    if (response.ok) {
+                      alert("Project created successfully!");
+                      window.location.href = "/projects";
+                    } else {
+                      alert(result.message || "Error creating project");
+                    }
+                  });
+                </script>
+                
               </div>
               <!-- card footer  -->
               <div class="card-footer bg-white text-center">
-                <a href="/createProject" class="btn btn-primary">Create</a>
               </div>
             </div>
 
           </div>
+          <div class="col-xl-3">
+            <div class="card mb-5">
+              <div class="card-header">
+                <h4 class="mb-0">Collaborators</h4>
+              </div>
+              <div class="card-body">
+                <h5>Add people </h5>
+                <div class="col-md-12">
+                  <label for="validationCustomUsername" class="form-label">Username</label>
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input type="text" class="form-control" id="validationCustomUsername"
+                      aria-describedby="inputGroupPrepend" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Scripts -->
-  <!-- Libs JS -->
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="node_modules/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-  <script src="node_modules/feather-icons/dist/feather.min.js"></script>
-  <script src="node_modules/prismjs/components/prism-core.min.js"></script>
-  <script src="node_modules/prismjs/components/prism-markup.min.js"></script>
-  <script src="node_modules/prismjs/plugins/line-numbers/prism-line-numbers.min.js"></script>
-  <script src="node_modules/apexcharts/dist/apexcharts.min.js"></script>
-  <script src="node_modules/dropzone/dist/min/dropzone.min.js"></script>
-  <!-- clipboard -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js"></script>
-  <!-- Theme JS -->
-  <!-- build:js @@webRoot/assets/js/theme.min.js -->
-  <script src="js/main.js"></script>
-  <script src="js/feather.js"></script>
-  <script src="js/copyButton.js"></script>
-  <script src="js/sidebarMenu.js"></script>
-  <script src="js/dashboard.js"></script>
+    <!-- Scripts -->
+    <!-- Libs JS -->
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="node_modules/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="node_modules/feather-icons/dist/feather.min.js"></script>
+    <script src="node_modules/prismjs/components/prism-core.min.js"></script>
+    <script src="node_modules/prismjs/components/prism-markup.min.js"></script>
+    <script src="node_modules/prismjs/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="node_modules/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="node_modules/dropzone/dist/min/dropzone.min.js"></script>
+    <!-- clipboard -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js"></script>
+    <!-- Theme JS -->
+    <!-- build:js @@webRoot/assets/js/theme.min.js -->
+    <script src="js/main.js"></script>
+    <script src="js/feather.js"></script>
+    <script src="js/copyButton.js"></script>
+    <script src="js/sidebarMenu.js"></script>
+    <script src="js/dashboard.js"></script>
 
 
 </body>

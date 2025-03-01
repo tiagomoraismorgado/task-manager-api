@@ -6,8 +6,9 @@ const userRoutes = require("./routes/userRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const authRoutes = require("./routes/authRoutes");
 
+
 const app = express();
-const server = require("http").createServer(app);  // Use HTTP server
+const server = require("http").createServer(app); 
 const io = require("socket.io")(server, { cors: { origin: "*" } });  // Enable Socket.io
 
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json()); 
 app.use('/api/tasks', taskRoutes);
 app.use('/api/auth', authRoutes);
+app.use("/api/projects", require("./routes/projectRoutes"));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve HTML pages
