@@ -26,6 +26,10 @@ app.get("/dashboard", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "dashboard.html"));
 });
 
+app.get("/projects", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "projects.html"));
+});
+
 
 mongoose
   .connect(process.env.MONGO_URI)

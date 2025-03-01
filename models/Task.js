@@ -1,9 +1,14 @@
 const mongoose = require("mongoose");
 
 const taskSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  status: { type: String, enum: ["en cours", "terminé", "annulé"], default: "en cours" },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    priority: { type: String, enum: ["low", "medium", "high"], default: "medium" },
+    status: { type: String, enum: ["Ongoing", "Completed", "Cancel"], default: "Ongoing" },
+    start_date: { type: Date, required: true },
+    end_date: { type: Date, required: true },
+    project: { type: mongoose.Schema.Types.ObjectId, ref: "Project", required: true }, // Belongs to a project
+    assigned_to: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Assigned user
 });
 
 module.exports = mongoose.model("Task", taskSchema);
