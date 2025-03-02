@@ -11,6 +11,12 @@
           "text-align: -webkit-match-parent"
         ]
       }
+    ],
+    "axe/text-alternatives": [
+      "default",
+      {
+        "document-title": "off"
+      }
     ]
   }
 }
