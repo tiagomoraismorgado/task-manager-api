@@ -286,40 +286,6 @@
                     <button class="btn btn-primary" type="submit">Submit</button>
                   </div>
                 </form>
-                <script>
-                  document.getElementById("projectForm").addEventListener("submit", async function (event) {
-                    event.preventDefault();
-                
-                    const token = localStorage.getItem("token");
-                
-                    const formData = {
-                      name: document.getElementById("textInput").value,
-                      description: document.getElementById("textarea-input").value,
-                      start_date: document.getElementById("startDate").value,
-                      end_date: document.getElementById("endDate").value,
-                      priority: document.getElementById("priority").value,
-                      status: document.getElementById("state").value,
-                    };
-                
-                    const response = await fetch("/api/projects/new", {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                      },
-                      body: JSON.stringify(formData),
-                    });
-                
-                    const result = await response.json();
-                    if (response.ok) {
-                      alert("Project created successfully!");
-                      window.location.href = "/projects";
-                    } else {
-                      alert(result.message || "Error creating project");
-                    }
-                  });
-                </script>
-                
               </div>
               <!-- card footer  -->
               <div class="card-footer bg-white text-center">
@@ -333,15 +299,14 @@
                 <h4 class="mb-0">Collaborators</h4>
               </div>
               <div class="card-body">
-                <h5>Add people </h5>
                 <div class="col-md-12">
-                  <label for="validationCustomUsername" class="form-label">Username</label>
-                  <div class="input-group has-validation">
-                    <span class="input-group-text" id="inputGroupPrepend">@</span>
-                    <input type="text" class="form-control" id="validationCustomUsername"
-                      aria-describedby="inputGroupPrepend" required>
+                  <label for="collaborators" class="form-label">Add Collaborators</label>
+                  <div class="input-group">
+                    <input type="email" class="form-control" id="collaborators" placeholder="Enter email">
+                    <button class="btn btn-primary" id="addCollaboratorBtn">Add</button>
                   </div>
                 </div>
+                <div id="collaboratorsList" class="mt-3"></div>
               </div>
             </div>
           </div>
@@ -350,6 +315,80 @@
     </div>
 
     <!-- Scripts -->
+    <script>
+      const collaboratorsList = []; // Initialize as an empty array
+
+      const inputField = document.getElementById("collaborators");
+      const addButton = document.getElementById("addCollaboratorBtn");
+      const listContainer = document.getElementById("collaboratorsList");
+
+      addButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        const email = inputField.value.trim();
+
+        if (email && !collaboratorsList.includes(email)) {
+          collaboratorsList.push(email);
+          updateCollaboratorsList();
+          inputField.value = ""; // Clear input field
+        }
+      });
+
+      function updateCollaboratorsList() {
+        listContainer.innerHTML = ""; // Clear existing list
+
+        collaboratorsList.forEach((email, index) => {
+          const collaboratorItem = document.createElement("div");
+          collaboratorItem.classList.add("d-flex", "justify-content-between", "align-items-center", "p-2", "border", "rounded", "mb-2");
+          collaboratorItem.innerHTML = `
+      <span>${email}</span>
+      <button class="btn btn-danger btn-sm" onclick="removeCollaborator(${index})">X</button>
+    `;
+          listContainer.appendChild(collaboratorItem);
+        });
+      }
+
+      function removeCollaborator(index) {
+        collaboratorsList.splice(index, 1); // Remove collaborator from the list
+        updateCollaboratorsList();
+      }
+
+      document.getElementById("projectForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const token = localStorage.getItem("token");
+
+        const formData = {
+          name: document.getElementById("textInput").value,
+          description: document.getElementById("textarea-input").value,
+          start_date: document.getElementById("startDate").value,
+          end_date: document.getElementById("endDate").value,
+          priority: document.getElementById("priority").value,
+          status: document.getElementById("state").value,
+          collaborators: collaboratorsList // Send the list of collaborator emails
+        };
+
+        try {
+          const response = await fetch("/api/projects/new", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(formData),
+          });
+
+          const result = await response.json();
+          if (response.ok) {
+            alert("Project created successfully!");
+            window.location.href = "/projects";
+          } else {
+            alert(result.message || "Error creating project");
+          }
+        } catch (error) {
+          console.error("Error submitting form:", error);
+        }
+      });
+    </script>
     <!-- Libs JS -->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
