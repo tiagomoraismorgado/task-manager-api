@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/user");
+const User = require("../models/User");
 
 
 router.post('/', async (req, res) => {
@@ -21,10 +21,10 @@ router.get('/all',async(req,res)=> {
   }}
 )
 
-router.get('/:name',async(req,res)=> {
+router.get('/:username',async(req,res)=> {
   try {
-    const name = req.params.name
-    const user = await User.findOne({name})
+    const username = req.params.username
+    const user = await User.findOne({username})
     if (user) {
       res.status(200).send(user)
     }else {

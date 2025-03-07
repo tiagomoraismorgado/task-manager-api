@@ -2,30 +2,28 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const path = require("path");
-const userRoutes = require("./routes/userRoutes"); 
-const taskRoutes = require("./routes/taskRoutes");
-const authRoutes = require("./routes/authRoutes");
-
+const userRoutes = require("./routes/user.routes"); 
+const taskRoutes = require("./routes/task.routes");
+const authRoutes = require("./routes/auth.routes");
+const projectRoutes = require("./routes/project.routes");
 const app = express();
-const server = require("http").createServer(app);  // Use HTTP server
-const io = require("socket.io")(server, { cors: { origin: "*" } });  // Enable Socket.io
-
+const server = require("http").createServer(app); 
+const io = require("socket.io")(server, { cors: { origin: "*" } });  // socket.io
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(express.json()); 
 app.use('/api/tasks', taskRoutes);
 app.use('/api/auth', authRoutes);
+app.use("/api/projects", projectRoutes);
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve HTML pages
 app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'views', 'sign-up.html')));
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'views', 'sign-in.html')));
 app.get("/dashboard", (req, res) => res.sendFile(path.join(__dirname, "views", "dashboard.html")));
 app.get("/projects", (req, res) => res.sendFile(path.join(__dirname, "views", "projects.html")));
 app.get("/new_project", (req, res) => res.sendFile(path.join(__dirname, "views", "createProject.html")));
 
-// Socket.io Setup
+// socket.io Setup
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
@@ -49,11 +47,11 @@ io.on("connection", (socket) => {
   });
 });
 
-// Connect to MongoDB
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connecté"))
   .catch(err => console.error("Erreur de connexion à MongoDB:", err));
 
-// Start Server
+
 server.listen(PORT, () => console.log(`Serveur démarré sur le port ${PORT}`));
