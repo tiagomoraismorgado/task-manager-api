@@ -356,6 +356,7 @@
               <!-- table  -->
               <div class="table-responsive">
                 <table class="table text-nowrap mb-0">
+
                     <thead class="table-light">
                         <tr>
                             <th>Name</th>
@@ -506,6 +507,96 @@
             
             </div>
             
+
+                  <thead class="table-light">
+                    <tr>
+                      <th>Name</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Priority</th>
+                      <th>Status</th>
+                      <th>Collaboration</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="projectsTable">
+                    <script>
+                      async function fetchProjects() {
+                        const token = localStorage.getItem("token");
+                        const response = await fetch("/api/projects/all", {
+                          method: "GET",
+                          headers: {
+                            "Authorization": `Bearer ${token}`,
+                          },
+                        });
+
+                        const projects = await response.json();
+                        const tableBody = document.getElementById("projectsTable");
+                        tableBody.innerHTML = "";
+
+                        projects.forEach(project => {
+                          const startDate = new Date(project.start_date);
+                          const endDate = new Date(project.end_date);
+
+                          const formattedStartDate = startDate.toISOString().split('T')[0];
+                          const formattedEndDate = endDate.toISOString().split('T')[0];
+                          const row = `<tr>
+                            <td>${project.name}</td>
+                            <td>${formattedStartDate}</td>
+                            <td>${formattedEndDate}</td>
+                            <td>${project.priority}</td>
+                            <td>${project.status}</td>
+                            <td>${project.collaboration}</td>
+                            <td>
+                                <a href="/projects/view/${project._id}" class="btn btn-icon me-2 btn-primary">
+                                  <span class="icon-base bx bx-show" style="color:#fff;"></span>
+                                </a>
+                                <a href="/projects/edit/${project._id}" class="btn btn-icon me-2 btn-warning">
+                                  <span class="icon-base bx bx-edit-alt" style="color:#fff;"></span>
+                                </a>
+                                <button onclick="deleteProject('${project._id}')" class="btn btn-icon me-2 btn-danger">
+                                  <span class="icon-base bx bx-trash" style="color:#fff;"></span>
+                                </button>
+                                <a href="/task" class="btn btn-primary me-2">
+                                  <span class="icon-base bx bx-plus me-1"></span>Task
+                                </a>
+                            </td>
+                          </tr>`;
+                          tableBody.innerHTML += row;
+                        });
+                      }
+
+                      async function deleteProject(id) {
+                        const token = localStorage.getItem("token");
+                        const confirmDelete = confirm("Are you sure you want to delete this project?");
+                        if (confirmDelete) {
+                          try {
+                            const response = await fetch(`/api/projects/delete/${id}`, {
+                              method: "DELETE",
+                              headers: {
+                                "Authorization": `Bearer ${token}`,
+                              },
+                            });
+
+                            if (response.ok) {
+                              alert("Project deleted successfully");
+                              fetchProjects(); // Refresh the project list
+                            } else {
+                              const errorData = await response.json();
+                              alert(`Error: ${errorData.message}`);
+                            }
+                          } catch (error) {
+                            alert("Error deleting project");
+                            console.error(error);
+                          }
+                        }
+                      }
+                      fetchProjects();
+                    </script>
+                  </tbody>
+                </table>
+              </div>
+
               <!-- card footer  -->
               <div class="card-footer bg-white text-center">
                 <a href="#">View All Projects</a>

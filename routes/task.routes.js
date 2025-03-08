@@ -1,4 +1,5 @@
 const express = require("express");
+
 const router = express.Router();
 const Task = require("../models/Task");// Assure-toi que ce chemin est correct
 
@@ -66,6 +67,34 @@ router.get("/project/:projectId", async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Erreur lors de la récupération des tâches", error });
     }
+});
+
+const Task = require("../models/Task");
+const authMiddleware = require("../middlewares/authMiddleware");
+
+const router = express.Router();
+
+router.post("/", authMiddleware, async (req, res) => {
+  const task = await Task.create({ ...req.body, user: req.user.userId });
+  req.io.emit("taskAdded", task);
+  res.status(201).json(task);
+});
+
+router.get("/", authMiddleware, async (req, res) => {
+  const tasks = await Task.find({ user: req.user.userId });
+  res.json(tasks);
+});
+
+router.put("/:id", authMiddleware, async (req, res) => {
+  const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  req.io.emit("taskUpdated", task);
+  res.json(task);
+});
+
+router.delete("/:id", authMiddleware, async (req, res) => {
+  await Task.findByIdAndDelete(req.params.id);
+  req.io.emit("taskDeleted", req.params.id);
+  res.json({ message: "Tâche supprimée" });
 });
 
 

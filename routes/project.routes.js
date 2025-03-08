@@ -68,6 +68,7 @@ router.get("/all", authMiddleware, async (req, res) => {
   }
 });
 
+
 //view project details
 router.post("/project/:id", authMiddleware, async (req, res) => {
     try {
@@ -80,7 +81,6 @@ router.post("/project/:id", authMiddleware, async (req, res) => {
       res.status(500).json({ message: "Error fetching project", error: error.message });
     }
   });
-
 
 router.delete('/delete/:id', async (req, res) => {
   try {
