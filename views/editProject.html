@@ -216,11 +216,7 @@
               </select>
             </div>
 
-            <!-- Collaborators -->
-            <div class="col-md-12">
-              <label for="updateCollaborators" class="form-label">Collaborators (Emails, comma-separated)</label>
-              <input type="text" class="form-control" id="updateCollaborators" name="collaborators">
-            </div>
+          
 
             <!-- Submit Button -->
             <div class="col-12">
@@ -276,11 +272,7 @@
         document.getElementById("updatePriority").value = project.priority;
         document.getElementById("updateStatus").value = project.status;
 
-        // Si vous avez un champ pour les collaborateurs
-        if (project.collaborators && project.collaborators.length > 0) {
-          const collaboratorsList = project.collaborators.join(", ");
-          document.getElementById("updateCollaborators").value = collaboratorsList;
-        }
+      
       }
     }
 
@@ -298,7 +290,6 @@
         end_date: document.getElementById("updateEndDate").value,
         priority: document.getElementById("updatePriority").value,
         status: document.getElementById("updateStatus").value,
-        collaborators: document.getElementById("updateCollaborators").value.split(",").map(email => email.trim()),
       };
 
       try {
