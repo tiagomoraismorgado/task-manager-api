@@ -62,50 +62,58 @@
     </style>
 </head>
 <body>
-
     <div class="task-form-container">
         <h2>New Task</h2>
         <form id="taskForm">
             <label for="title">Title</label>
             <input type="text" id="title" name="title" placeholder="Enter task title" required>
-    
+
             <label for="description">Description</label>
             <textarea id="description" name="description" placeholder="Type something here" required></textarea>
-    
+
             <label for="start_date">Start Date</label>
             <input type="date" id="start_date" name="start_date" required>
-    
+
             <label for="end_date">End Date</label>
             <input type="date" id="end_date" name="end_date" required>
-    
+
             <label for="priority">Priority</label>
             <select id="priority" name="priority">
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
             </select>
-    
+
             <label for="status">Status</label>
             <select id="status" name="status">
                 <option value="Ongoing">Ongoing</option>
                 <option value="Completed">Completed</option>
                 <option value="Cancel">Cancel</option>
             </select>
-    
+
             <label for="project">Project</label>
-            <input type="text" id="project" name="project" placeholder="Enter project ID" required>
-    
+            <input type="text" id="project" name="project" placeholder="Enter project ID" readonly required>
+
             <label for="assigned_to">Assign To</label>
             <input type="text" id="assigned_to" name="assigned_to" placeholder="Enter user ID">
-    
+
             <button type="submit">Submit</button>
         </form>
     </div>
-    
+
     <script>
+        // Récupérer l'ID du projet à partir de l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('project_id');
+        
+        // Pré-remplir le champ "project" avec l'ID du projet
+        if (projectId) {
+            document.getElementById('project').value = projectId;
+        }
+
         document.getElementById("taskForm").addEventListener("submit", async function(event) {
             event.preventDefault();
-    
+
             const formData = {
                 title: document.getElementById("title").value,
                 description: document.getElementById("description").value,
@@ -116,14 +124,14 @@
                 project: document.getElementById("project").value,
                 assigned_to: document.getElementById("assigned_to").value || null
             };
-    
+
             try {
-                const response = await fetch("/api/tasks/new", {  // URL modifiée ici
+                const response = await fetch("/api/tasks/new", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formData)
                 });
-    
+
                 const result = await response.json();
                 if (response.ok) {
                     alert("Task added successfully!");
@@ -137,7 +145,6 @@
             }
         });
     </script>
-    
-
 </body>
+
 </html>
