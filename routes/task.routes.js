@@ -69,10 +69,9 @@ router.get("/project/:projectId", async (req, res) => {
     }
 });
 
-const Task = require("../models/Task");
-const authMiddleware = require("../middlewares/authMiddleware");
 
-const router = express.Router();
+
+
 
 router.post("/", authMiddleware, async (req, res) => {
   const task = await Task.create({ ...req.body, user: req.user.userId });

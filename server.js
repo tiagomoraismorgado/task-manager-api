@@ -25,13 +25,12 @@ app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'views', 'sign
 app.get("/dashboard", (req, res) => res.sendFile(path.join(__dirname, "views", "dashboard.html")));
 app.get("/projects", (req, res) => res.sendFile(path.join(__dirname, "views", "projects.html")));
 app.get("/new_project", (req, res) => res.sendFile(path.join(__dirname, "views", "createProject.html")));
-<<<<<<< HEAD
+
 app.get("/new", (req, res) => res.sendFile(path.join(__dirname, "views", "tasks.html")));
 app.get("/delete", (req, res) => res.sendFile(path.join(__dirname, "views", "tasks.html")));
 app.get("/update", (req, res) => res.sendFile(path.join(__dirname, "views", "tasks.html")));
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "views", "tasks.html")));
-=======
->>>>>>> fac4af9e9bc50de9b6c86c0f3de7752cb5f34b4f
+
 
 // socket.io Setup
 io.on("connection", (socket) => {
@@ -58,8 +57,6 @@ io.on("connection", (socket) => {
 });
 
 
-<<<<<<< HEAD
-// Route pour récupérer les tâches d'un projet
 app.get('/projects/:projectId/tasks', async (req, res) => {
   try {
       const projectId = req.params.projectId;
@@ -75,8 +72,7 @@ app.get('/projects/:projectId/tasks', async (req, res) => {
 
 
 
-=======
->>>>>>> fac4af9e9bc50de9b6c86c0f3de7752cb5f34b4f
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connecté"))
