@@ -18,7 +18,7 @@ router.post("/new", async (req, res) => {
 });
 
 // 📌 Récupérer toutes les tâches
-router.get("/", async (req, res) => {
+router.get("/all", async (req, res) => {
     try {
         const tasks = await Task.find().populate("project assigned_to");
         res.json(tasks);
@@ -73,28 +73,6 @@ router.get("/project/:projectId", async (req, res) => {
 
 
 
-router.post("/", authMiddleware, async (req, res) => {
-  const task = await Task.create({ ...req.body, user: req.user.userId });
-  req.io.emit("taskAdded", task);
-  res.status(201).json(task);
-});
-
-router.get("/", authMiddleware, async (req, res) => {
-  const tasks = await Task.find({ user: req.user.userId });
-  res.json(tasks);
-});
-
-router.put("/:id", authMiddleware, async (req, res) => {
-  const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  req.io.emit("taskUpdated", task);
-  res.json(task);
-});
-
-router.delete("/:id", authMiddleware, async (req, res) => {
-  await Task.findByIdAndDelete(req.params.id);
-  req.io.emit("taskDeleted", req.params.id);
-  res.json({ message: "Tâche supprimée" });
-});
 
 
 module.exports = router;
