@@ -39,6 +39,18 @@ router.get("/all", authMiddleware, async (req, res) => {
   }
 });
 
+//view project details
+router.post("/project/:id", authMiddleware, async (req, res) => {
+    try {
+      const project = await Project.findById(req.params.id);
+      if (!project) {
+        return res.status(404).json({ message: "Project not found" });
+      }
+      res.render('projectDetails', { project: project }); // Rendre une vue avec les détails du projet
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching project", error: error.message });
+    }
+  });
 
 
 // GET /api/projects/:id
