@@ -24,7 +24,10 @@ app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'views', 's
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'views', 'sign-in.html')));
 app.get("/dashboard", (req, res) => res.sendFile(path.join(__dirname, "views", "dashboard.html")));
 app.get("/projects", (req, res) => res.sendFile(path.join(__dirname, "views", "projects.html")));
+app.get("/tasks", (req, res) => res.sendFile(path.join(__dirname, "views", "tasks.html")));
+app.get("/myTasks", (req, res) => res.sendFile(path.join(__dirname, "views", "myTasks.html")));
 app.get("/new_project", (req, res) => res.sendFile(path.join(__dirname, "views", "createProject.html")));
+
 // Route pour afficher la page d'édition
 app.get('/projects/edit/:id', (req, res) => {
  res.sendFile(path.join(__dirname, 'views', 'editProject.html'));
