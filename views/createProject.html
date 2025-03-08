@@ -226,7 +226,7 @@
             <!-- Page header -->
             <div>
               <div class="d-flex justify-content-between align-items-center">
-                <div class="mb-2 mb-lg-0">
+                <div class="mb-2 mb-lg-8">
                   <h3 class="mb-0 fw-bold text-white">Projects</h3>
                 </div>
               </div>
@@ -234,7 +234,7 @@
           </div>
         </div>
         <!-- row  -->
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-xl-9 col-md-12 col-12">
             <!-- card  -->
             <div class="card">
@@ -283,7 +283,7 @@
                     </select>
                   </div>
                   <div class="col-12">
-                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <button class="btn btn-primary" type="submit">Create</button>
                   </div>
                 </form>
               </div>
@@ -293,64 +293,12 @@
             </div>
 
           </div>
-          <div class="col-xl-3">
-            <div class="card mb-5">
-              <div class="card-header">
-                <h4 class="mb-0">Collaborators</h4>
-              </div>
-              <div class="card-body">
-                <div class="col-md-12">
-                  <label for="collaborators" class="form-label">Add Collaborators</label>
-                  <div class="input-group">
-                    <input type="email" class="form-control" id="collaborators" placeholder="Enter email">
-                    <button class="btn btn-primary" id="addCollaboratorBtn">Add</button>
-                  </div>
-                </div>
-                <div id="collaboratorsList" class="mt-3"></div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
     <!-- Scripts -->
     <script>
-      const collaboratorsList = []; // Initialize as an empty array
-
-      const inputField = document.getElementById("collaborators");
-      const addButton = document.getElementById("addCollaboratorBtn");
-      const listContainer = document.getElementById("collaboratorsList");
-
-      addButton.addEventListener("click", function (event) {
-        event.preventDefault();
-        const email = inputField.value.trim();
-
-        if (email && !collaboratorsList.includes(email)) {
-          collaboratorsList.push(email);
-          updateCollaboratorsList();
-          inputField.value = ""; // Clear input field
-        }
-      });
-
-      function updateCollaboratorsList() {
-        listContainer.innerHTML = ""; // Clear existing list
-
-        collaboratorsList.forEach((email, index) => {
-          const collaboratorItem = document.createElement("div");
-          collaboratorItem.classList.add("d-flex", "justify-content-between", "align-items-center", "p-2", "border", "rounded", "mb-2");
-          collaboratorItem.innerHTML = `
-      <span>${email}</span>
-      <button class="btn btn-danger btn-sm" onclick="removeCollaborator(${index})">X</button>
-    `;
-          listContainer.appendChild(collaboratorItem);
-        });
-      }
-
-      function removeCollaborator(index) {
-        collaboratorsList.splice(index, 1); // Remove collaborator from the list
-        updateCollaboratorsList();
-      }
 
       document.getElementById("projectForm").addEventListener("submit", async function (event) {
         event.preventDefault();
@@ -364,7 +312,6 @@
           end_date: document.getElementById("endDate").value,
           priority: document.getElementById("priority").value,
           status: document.getElementById("state").value,
-          collaborators: collaboratorsList // Send the list of collaborator emails
         };
 
         try {
