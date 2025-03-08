@@ -7,7 +7,11 @@ const taskSchema = new mongoose.Schema({
     status: { type: String, enum: ["Ongoing", "Completed", "Cancel"], default: "Ongoing" },
     start_date: { type: Date, required: true },
     end_date: { type: Date, required: true },
+
+    project: { type: mongoose.Schema.Types.ObjectId, ref: "Project"},
+
     project: { type: mongoose.Schema.Types.ObjectId, ref: "Project", required: true },
+
     assigned_to: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
