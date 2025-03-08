@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+  <!-- Favicon icon-->
+  <link rel="shortcut icon" type="image/x-icon" href="images/favicon/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.css">
+  <!-- Boxicons CSS -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <title>Projects | TaskHive </title>
+</head>
+
+<body>
+  <div id="db-wrapper">
+    <!-- Sidebar -->
+    <nav class="navbar-vertical navbar">
+      <div class="nav-scroller">
+        <!-- Brand logo -->
+        <a class="navbar-brand" href="/dashboard">
+          <img src="images/brand/logo/logo.svg" alt="" />
+        </a>
+        <!-- Navbar nav -->
+        <ul class="navbar-nav flex-column" id="sideNavbar">
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">
+              <i class='bx bx-home-alt me-2'></i>Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link has-arrow " href="tasks.html">
+              <i class='bx bx-check-circle me-2'></i>My tasks
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link has-arrow" href="inbox.html">
+              <i class='bx bx-bell me-2'></i>Inbox
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link has-arrow active " href="/projects">
+              <i class='bx bx-objects-horizontal-left me-2'></i> Projects
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link has-arrow " href="workspace.html">
+              <i class='bx bx-group me-2'></i> My workspace
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link has-arrow " href="reports.html">
+              <i class='bx bx-network-chart me-2'></i> Reports
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Page content -->
+    <div id="page-content">
+      <div class="header @@classList">
+        <!-- navbar -->
+        <nav class="navbar-classic navbar navbar-expand-lg">
+          <a id="nav-toggle" href="#"><i data-feather="menu" class="nav-icon me-2 icon-xs"></i></a>
+          <div class="ms-lg-3 d-none d-md-none d-lg-block">
+            <!-- Form -->
+            <form class="d-flex align-items-center">
+              <input type="search" class="form-control" placeholder="Search" />
+            </form>
+          </div>
+          <!--Navbar nav -->
+          <ul class="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
+            <li class="dropdown stopevent">
+              <a class="btn btn-light btn-icon rounded-circle indicator
+                indicator-primary text-muted" href="#" role="button" id="dropdownNotification"
+                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="icon-xs" data-feather="bell"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end" aria-labelledby="dropdownNotification">
+                <div class="">
+                  <div class="border-bottom px-3 pt-2 pb-3 d-flex
+                    justify-content-between align-items-center">
+                    <p class="mb-0 text-dark fw-medium fs-4">Notifications</p>
+                    <a href="#" class="text-muted">
+                      <span>
+                        <i class="me-1 icon-xxs" data-feather="settings"></i>
+                      </span>
+                    </a>
+                  </div>
+                  <!-- List group -->
+                  <ul class="list-group list-group-flush notification-list-scroll">
+                    <!-- List group item -->
+                    <li class="list-group-item bg-light">
+
+
+                      <a href="#" class="text-muted">
+                        <h5 class="fw-bold mb-1">Rishi Chopra</h5>
+                        <p class="mb-0">
+                          Mauris blandit erat id nunc blandit, ac eleifend dolor pretium.
+                        </p>
+                      </a>
+
+
+
+                    </li>
+                    <!-- List group item -->
+                    <li class="list-group-item">
+
+
+                      <a href="#" class="text-muted">
+                        <h5 class="fw-bold mb-1">Neha Kannned</h5>
+                        <p class="mb-0">
+                          Proin at elit vel est condimentum elementum id in ante. Maecenas et sapien metus.
+                        </p>
+                      </a>
+
+
+
+                    </li>
+                    <!-- List group item -->
+                    <li class="list-group-item">
+
+
+                      <a href="#" class="text-muted">
+                        <h5 class="fw-bold mb-1">Nirmala Chauhan</h5>
+                        <p class="mb-0">
+                          Morbi maximus urna lobortis elit sollicitudin sollicitudieget elit vel pretium.
+                        </p>
+                      </a>
+
+
+
+                    </li>
+                    <!-- List group item -->
+                    <li class="list-group-item">
+
+
+                      <a href="#" class="text-muted">
+                        <h5 class="fw-bold mb-1">Sina Ray</h5>
+                        <p class="mb-0">
+                          Sed aliquam augue sit amet mauris volutpat hendrerit sed nunc eu diam.
+                        </p>
+                      </a>
+
+
+
+                    </li>
+                  </ul>
+                  <div class="border-top px-3 py-2 text-center">
+                    <a href="#" class="text-inherit fw-semi-bold">
+                      View all Notifications
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- List -->
+            <li class="dropdown ms-2">
+              <a class="rounded-circle" href="#" role="button" id="dropdownUser" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <div class="avatar avatar-md avatar-indicators avatar-online">
+                  <img alt="avatar" src="images/avatar/avatar-1.jpg" class="rounded-circle" />
+                </div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
+                <div class="px-4 pb-0 pt-2">
+
+
+                  <div class="lh-1 ">
+                    <h5 class="mb-1"> John E. Grainger</h5>
+                    <a href="#" class="text-inherit fs-6">View my profile</a>
+                  </div>
+                  <div class=" dropdown-divider mt-3 mb-2"></div>
+                </div>
+
+                <ul class="list-unstyled">
+
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <i class="me-2 icon-xxs dropdown-item-icon" data-feather="user"></i>Edit
+                      Profile
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <i class="me-2 icon-xxs dropdown-item-icon" data-feather="activity"></i>Activity Log
+                    </a>
+
+
+                  </li>
+
+                  <li>
+                    <a class="dropdown-item text-primary" href="#">
+                      <i class="me-2 icon-xxs text-primary dropdown-item-icon" data-feather="star"></i>Go Pro
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <i class="me-2 icon-xxs dropdown-item-icon" data-feather="settings"></i>Account Settings
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="@@webRoot/index.html">
+                      <i class="me-2 icon-xxs dropdown-item-icon" data-feather="power"></i>Sign Out
+                    </a>
+                  </li>
+                </ul>
+
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- Container fluid -->
+      <div class="bg-primary pt-10 pb-21"></div>
+      <div class="container-fluid mt-n22 px-6">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-12">
+            <!-- Page header -->
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="mb-2 mb-lg-0">
+                  <h3 class="mb-0 fw-bold text-white">Projects</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- row  -->
+        <div class="row">
+          <div class="col-xl-9 col-md-12 col-12">
+            <!-- card  -->
+            <div class="card">
+              <!-- card header  -->
+              <div class="card-header bg-white border-bottom-0 py-4">
+                <h4 class="mb-0">New Projects</h4>
+              </div>
+              <!-- table  -->
+              <div class="card-body bg-white border-bottom-0 py-4">
+                <!-- Validation Form -->
+                <form id="projectForm" class="row g-3 needs-validation" novalidate>
+                  <div class="mb-3">
+                    <label class="form-label" for="textInput">Name</label>
+                    <input type="text" id="textInput" name="name" class="form-control" placeholder="Enter project title"
+                      required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="textarea-input" class="form-label">Description</label>
+                    <textarea class="form-control" id="textarea-input" name="description" rows="5"
+                      placeholder="Type something here"></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="startDate" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="startDate" name="start_date" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="endDate" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="endDate" name="end_date" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="priority" class="form-label">Priority</label>
+                    <select class="form-select" id="priority" name="priority" required>
+                      <option selected disabled value="">Set Priority</option>
+                      <option>High</option>
+                      <option>Medium</option>
+                      <option>Low</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="state" class="form-label">State</label>
+                    <select class="form-select" id="state" name="status" required>
+                      <option selected disabled value="">Set Status</option>
+                      <option>Ongoing</option>
+                      <option>Completed</option>
+                      <option>Cancelled</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                  </div>
+                </form>
+              </div>
+              <!-- card footer  -->
+              <div class="card-footer bg-white text-center">
+              </div>
+            </div>
+
+          </div>
+          <div class="col-xl-3">
+            <div class="card mb-5">
+              <div class="card-header">
+                <h4 class="mb-0">Collaborators</h4>
+              </div>
+              <div class="card-body">
+                <div class="col-md-12">
+                  <label for="collaborators" class="form-label">Add Collaborators</label>
+                  <div class="input-group">
+                    <input type="email" class="form-control" id="collaborators" placeholder="Enter email">
+                    <button class="btn btn-primary" id="addCollaboratorBtn">Add</button>
+                  </div>
+                </div>
+                <div id="collaboratorsList" class="mt-3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+      const collaboratorsList = []; // Initialize as an empty array
+
+      const inputField = document.getElementById("collaborators");
+      const addButton = document.getElementById("addCollaboratorBtn");
+      const listContainer = document.getElementById("collaboratorsList");
+
+      addButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        const email = inputField.value.trim();
+
+        if (email && !collaboratorsList.includes(email)) {
+          collaboratorsList.push(email);
+          updateCollaboratorsList();
+          inputField.value = ""; // Clear input field
+        }
+      });
+
+      function updateCollaboratorsList() {
+        listContainer.innerHTML = ""; // Clear existing list
+
+        collaboratorsList.forEach((email, index) => {
+          const collaboratorItem = document.createElement("div");
+          collaboratorItem.classList.add("d-flex", "justify-content-between", "align-items-center", "p-2", "border", "rounded", "mb-2");
+          collaboratorItem.innerHTML = `
+      <span>${email}</span>
+      <button class="btn btn-danger btn-sm" onclick="removeCollaborator(${index})">X</button>
+    `;
+          listContainer.appendChild(collaboratorItem);
+        });
+      }
+
+      function removeCollaborator(index) {
+        collaboratorsList.splice(index, 1); // Remove collaborator from the list
+        updateCollaboratorsList();
+      }
+
+      document.getElementById("projectForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const token = localStorage.getItem("token");
+
+        const formData = {
+          name: document.getElementById("textInput").value,
+          description: document.getElementById("textarea-input").value,
+          start_date: document.getElementById("startDate").value,
+          end_date: document.getElementById("endDate").value,
+          priority: document.getElementById("priority").value,
+          status: document.getElementById("state").value,
+          collaborators: collaboratorsList // Send the list of collaborator emails
+        };
+
+        try {
+          const response = await fetch("/api/projects/new", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(formData),
+          });
+
+          const result = await response.json();
+          if (response.ok) {
+            alert("Project created successfully!");
+            window.location.href = "/projects";
+          } else {
+            alert(result.message || "Error creating project");
+          }
+        } catch (error) {
+          console.error("Error submitting form:", error);
+        }
+      });
+    </script>
+    <!-- Libs JS -->
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="node_modules/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="node_modules/feather-icons/dist/feather.min.js"></script>
+    <script src="node_modules/prismjs/components/prism-core.min.js"></script>
+    <script src="node_modules/prismjs/components/prism-markup.min.js"></script>
+    <script src="node_modules/prismjs/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="node_modules/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="node_modules/dropzone/dist/min/dropzone.min.js"></script>
+    <!-- clipboard -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js"></script>
+    <!-- Theme JS -->
+    <!-- build:js @@webRoot/assets/js/theme.min.js -->
+    <script src="js/main.js"></script>
+    <script src="js/feather.js"></script>
+    <script src="js/copyButton.js"></script>
+    <script src="js/sidebarMenu.js"></script>
+    <script src="js/dashboard.js"></script>
+
+
+</body>
+
+</html>
