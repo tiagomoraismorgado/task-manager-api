@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post("/new", authMiddleware, async (req, res) => {
   try {
-      const { name, description, start_date, end_date, priority, status, collaborators } = req.body;
+      const { name, description, start_date, end_date, priority, status } = req.body;
 
       // Create the new project (without collaborators initially)
       const newProject = new Project({
@@ -18,39 +18,10 @@ router.post("/new", authMiddleware, async (req, res) => {
           end_date,
           priority,
           status,
-          admin: req.user.id, // Set the admin to the logged-in user
-          collaborators: [] // Start with an empty array
+          admin: req.user.id,
       });
 
-      // Save the project to get its ID
       await newProject.save();
-
-      // If there are collaborators, process them
-      if (collaborators && collaborators.length > 0) {
-          for (const email of collaborators) {
-              // Find the user by email
-              const user = await User.findOne({ email });
-
-              if (user) {
-                  // Add the user's ObjectId to the collaborators array
-                  newProject.collaborators.push(user._id);
-
-                  // Create an invitation for the collaborator
-                  const newInvitation = new Invitation({
-                      project: newProject._id,
-                      inviterEmail: req.user.email, // Email of the admin
-                      inviteeEmail: email // Email of the collaborator
-                  });
-                  await newInvitation.save();
-              } else {
-                  console.warn(`User with email ${email} not found. Skipping invitation.`);
-              }
-          }
-
-          // Save the updated project with collaborators
-          await newProject.save();
-      }
-
       res.status(201).json({ message: "Project created successfully", project: newProject });
   } catch (error) {
       console.error("Error creating project:", error);
