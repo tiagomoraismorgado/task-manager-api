@@ -33,7 +33,7 @@ app.get('/projects/edit/:id', (req, res) => {
  res.sendFile(path.join(__dirname, 'views', 'editProject.html'));
 });
 // Route pour afficher la page de détails project
-app.get('/projects/details/:id', (req, res) => {
+app.get('/projects/view/:id', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'projectDetails.html'));
 });
 
