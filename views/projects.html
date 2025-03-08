@@ -10,6 +10,8 @@
   <!-- Third-party Icon Fonts -->
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 
   <!-- Core CSS (should load first) -->
   <link rel="stylesheet" href="assets/vendor/css/core.css" class="template-customizer-core-css">
@@ -28,9 +30,41 @@
   <link rel="stylesheet" href="css/custom.css">
 
 </head>
+<style>
+  .status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 90px;
+  }
+
+  .status-in-progress {
+    background-color: #d1f0ff;
+    color: #00a3ff;
+  }
+
+  .status-completed {
+    background-color: #d4edda;
+    color: #218838;
+  }
+
+  .status-canceled {
+    background-color: #f8d7da;
+    color: #c82333;
+  }
+
+  .status-pending {
+    background-color: #fff3cd;
+    color: #ffc107;
+  }
+</style>
 
 <body>
   <div id="db-wrapper">
+    <div id="alertContainer" class="alert-container"></div>
     <!-- Sidebar -->
     <nav class="navbar-vertical navbar">
       <div class="nav-scroller">
@@ -73,7 +107,6 @@
         </ul>
       </div>
     </nav>
-
     <!-- Page content -->
     <div id="page-content">
       <div class="header @@classList">
@@ -247,102 +280,89 @@
             </div>
           </div>
           <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
-            <!-- card -->
+            <!-- Total Projects Card -->
             <div class="card rounded-3">
-              <!-- card body -->
               <div class="card-body">
-                <!-- heading -->
-                <div class="d-flex justify-content-between align-items-center
-                    mb-3">
-                  <div>
-                    <h4 class="mb-0">Projects</h4>
-                  </div>
-                  <div class="icon-shape icon-md bg-light-primary text-primary
-                      rounded-1">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h4 class="mb-0">Total Projects</h4>
+                  <div class="icon-shape icon-md bg-light-primary text-primary rounded-1">
                     <i class="bi bi-briefcase fs-4"></i>
                   </div>
                 </div>
-                <!-- project number -->
-                <div>
-                  <h1 class="fw-bold">18</h1>
-                  <p class="mb-0"><span class="text-dark me-2">2</span>Completed</p>
-                </div>
+                <h1 class="fw-bold" id="totalProjects">0</h1>
               </div>
             </div>
           </div>
-          <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
-            <!-- card -->
-            <div class="card rounded-3">
-              <!-- card body -->
-              <div class="card-body">
-                <!-- heading -->
-                <div class="d-flex justify-content-between align-items-center
-                    mb-3">
-                  <div>
-                    <h4 class="mb-0">Active Task</h4>
-                  </div>
-                  <div class="icon-shape icon-md bg-light-primary text-primary
-                      rounded-1">
-                    <i class="bi bi-list-task fs-4"></i>
-                  </div>
-                </div>
-                <!-- project number -->
-                <div>
-                  <h1 class="fw-bold">132</h1>
-                  <p class="mb-0"><span class="text-dark me-2">28</span>Completed</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
-            <!-- card -->
-            <div class="card rounded-3">
-              <!-- card body -->
-              <div class="card-body">
-                <!-- heading -->
-                <div class="d-flex justify-content-between align-items-center
-                    mb-3">
-                  <div>
-                    <h4 class="mb-0">Teams</h4>
-                  </div>
-                  <div class="icon-shape icon-md bg-light-primary text-primary
-                      rounded-1">
-                    <i class="bi bi-people fs-4"></i>
-                  </div>
-                </div>
-                <!-- project number -->
-                <div>
-                  <h1 class="fw-bold">12</h1>
-                  <p class="mb-0"><span class="text-dark me-2">1</span>Completed</p>
-                </div>
-              </div>
-            </div>
 
-          </div>
           <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
-            <!-- card -->
+            <!-- Ongoing Projects Card -->
             <div class="card rounded-3">
-              <!-- card body -->
               <div class="card-body">
-                <!-- heading -->
-                <div class="d-flex justify-content-between align-items-center
-                    mb-3">
-                  <div>
-                    <h4 class="mb-0">Productivity</h4>
-                  </div>
-                  <div class="icon-shape icon-md bg-light-primary text-primary
-                      rounded-1">
-                    <i class="bi bi-bullseye fs-4"></i>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h4 class="mb-0">Ongoing Projects</h4>
+                  <div class="icon-shape icon-md bg-light-warning text-warning rounded-1">
+                    <i class="bi bi-hourglass-split fs-4"></i>
                   </div>
                 </div>
-                <!-- project number -->
-                <div>
-                  <h1 class="fw-bold">76%</h1>
-                  <p class="mb-0"><span class="text-success me-2">5%</span>Completed</p>
-                </div>
+                <h1 class="fw-bold" id="ongoingProjects">0</h1>
               </div>
             </div>
           </div>
+
+          <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
+            <!-- Completed Projects Card -->
+            <div class="card rounded-3">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h4 class="mb-0">Completed Projects</h4>
+                  <div class="icon-shape icon-md bg-light-success text-success rounded-1">
+                    <i class="bi bi-check-circle fs-4"></i>
+                  </div>
+                </div>
+                <h1 class="fw-bold" id="completedProjects">0</h1>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
+            <!-- Canceled Projects Card -->
+            <div class="card rounded-3">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h4 class="mb-0">Canceled Projects</h4>
+                  <div class="icon-shape icon-md bg-light-danger text-danger rounded-1">
+                    <i class="bi bi-x-circle fs-4"></i>
+                  </div>
+                </div>
+                <h1 class="fw-bold" id="canceledProjects">0</h1>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            async function fetchProjectsStats() {
+              const token = localStorage.getItem("token");
+              const response = await fetch("/api/projects/all", {
+                method: "GET",
+                headers: {
+                  "Authorization": `Bearer ${token}`,
+                },
+              });
+              const projects = await response.json();
+
+              const totalProjects = projects.length;
+              const ongoingProjects = projects.filter(p => p.status === "Ongoing").length;
+              const completedProjects = projects.filter(p => p.status === "Completed").length;
+              const canceledProjects = projects.filter(p => p.status === "Canceled").length;
+
+              document.getElementById("totalProjects").innerText = totalProjects;
+              document.getElementById("ongoingProjects").innerText = ongoingProjects;
+              document.getElementById("completedProjects").innerText = completedProjects;
+              document.getElementById("canceledProjects").innerText = canceledProjects;
+            }
+
+            fetchProjectsStats();
+          </script>
         </div>
         <!-- row  -->
         <div class="row mt-6">
@@ -515,7 +535,6 @@
                       <th>End Date</th>
                       <th>Priority</th>
                       <th>Status</th>
-                      <th>Collaboration</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -540,30 +559,63 @@
 
                           const formattedStartDate = startDate.toISOString().split('T')[0];
                           const formattedEndDate = endDate.toISOString().split('T')[0];
+
+                          // Define status styles
+                          let statusClass;
+                          switch (project.status.toLowerCase()) {
+                            case "in progress":
+                              statusClass = "status-in-progress";
+                              break;
+                            case "completed":
+                              statusClass = "status-completed";
+                              break;
+                            case "canceled":
+                            case "cancel":
+                              statusClass = "status-canceled";
+                              break;
+                            case "pending":
+                              statusClass = "status-pending";
+                              break;
+                            default:
+                              statusClass = "status-pending"; // Default to pending if not recognized
+                          }
+
                           const row = `<tr>
                             <td>${project.name}</td>
                             <td>${formattedStartDate}</td>
                             <td>${formattedEndDate}</td>
                             <td>${project.priority}</td>
-                            <td>${project.status}</td>
-                            <td>${project.collaboration}</td>
+                            <td><span class="status-badge ${statusClass}">${project.status}</span></td>
                             <td>
-                                <a href="/projects/view/${project._id}" class="btn btn-icon me-2 btn-primary">
-                                  <span class="icon-base bx bx-show" style="color:#fff;"></span>
-                                </a>
-                                <a href="/projects/edit/${project._id}" class="btn btn-icon me-2 btn-warning">
-                                  <span class="icon-base bx bx-edit-alt" style="color:#fff;"></span>
-                                </a>
-                                <button onclick="deleteProject('${project._id}')" class="btn btn-icon me-2 btn-danger">
-                                  <span class="icon-base bx bx-trash" style="color:#fff;"></span>
-                                </button>
-                                <a href="/task" class="btn btn-primary me-2">
-                                  <span class="icon-base bx bx-plus me-1"></span>Task
-                                </a>
+                              <a href="/projects/view/${project._id}" class="btn btn-icon me-2 btn-primary">
+                                <span class="icon-base bx bx-show" style="color:#fff;"></span>
+                              </a>
+                              <a href="/projects/edit/${project._id}" class="btn btn-icon me-2 btn-warning">
+                                <span class="icon-base bx bx-edit-alt" style="color:#fff;"></span>
+                              </a>
+                              <button onclick="deleteProject('${project._id}')" class="btn btn-icon me-2 btn-danger">
+                                <span class="icon-base bx bx-trash" style="color:#fff;"></span>
+                              </button>
+                              <a href="/task" class="btn btn-primary me-2">
+                                <span class="icon-base bx bx-plus me-1"></span>Task
+                              </a>
                             </td>
                           </tr>`;
                           tableBody.innerHTML += row;
                         });
+                      }
+                      function showAlert(message, type) {
+                        const alertContainer = document.getElementById("alertContainer");
+                        alertContainer.innerHTML = `
+                          <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                            ${message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>`;
+
+                        // Auto-hide alert after 3 seconds
+                        setTimeout(() => {
+                          alertContainer.innerHTML = "";
+                        }, 3000);
                       }
 
                       async function deleteProject(id) {
@@ -579,14 +631,14 @@
                             });
 
                             if (response.ok) {
-                              alert("Project deleted successfully");
+                              showAlert("Project deleted successfully!", "success");
                               fetchProjects(); // Refresh the project list
                             } else {
                               const errorData = await response.json();
-                              alert(`Error: ${errorData.message}`);
+                              showAlert(`Error: ${errorData.message}`, "danger");
                             }
                           } catch (error) {
-                            alert("Error deleting project");
+                            showAlert("Error deleting project!", "danger");
                             console.error(error);
                           }
                         }
@@ -599,7 +651,7 @@
 
               <!-- card footer  -->
               <div class="card-footer bg-white text-center">
-                <a href="#">View All Projects</a>
+                <a href="#"></a>
               </div>
             </div>
           </div>

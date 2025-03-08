@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post("/new", authMiddleware, async (req, res) => {
   try {
-      const { name, description, start_date, end_date, priority, status, collaborators } = req.body;
+      const { name, description, start_date, end_date, priority, status } = req.body;
 
       // Create the new project (without collaborators initially)
       const newProject = new Project({
@@ -18,39 +18,10 @@ router.post("/new", authMiddleware, async (req, res) => {
           end_date,
           priority,
           status,
-          admin: req.user.id, // Set the admin to the logged-in user
-          collaborators: [] // Start with an empty array
+          admin: req.user.id,
       });
 
-      // Save the project to get its ID
       await newProject.save();
-
-      // If there are collaborators, process them
-      if (collaborators && collaborators.length > 0) {
-          for (const email of collaborators) {
-              // Find the user by email
-              const user = await User.findOne({ email });
-
-              if (user) {
-                  // Add the user's ObjectId to the collaborators array
-                  newProject.collaborators.push(user._id);
-
-                  // Create an invitation for the collaborator
-                  const newInvitation = new Invitation({
-                      project: newProject._id,
-                      inviterEmail: req.user.email, // Email of the admin
-                      inviteeEmail: email // Email of the collaborator
-                  });
-                  await newInvitation.save();
-              } else {
-                  console.warn(`User with email ${email} not found. Skipping invitation.`);
-              }
-          }
-
-          // Save the updated project with collaborators
-          await newProject.save();
-      }
-
       res.status(201).json({ message: "Project created successfully", project: newProject });
   } catch (error) {
       console.error("Error creating project:", error);
@@ -68,7 +39,6 @@ router.get("/all", authMiddleware, async (req, res) => {
   }
 });
 
-
 //view project details
 router.post("/project/:id", authMiddleware, async (req, res) => {
     try {
@@ -82,6 +52,99 @@ router.post("/project/:id", authMiddleware, async (req, res) => {
     }
   });
 
+
+// GET /api/projects/:id
+router.get("/:id", authMiddleware, async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id)
+      .populate("collaborators", "email") // Optionnel : Récupère les e-mails des collaborateurs
+      .exec();
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    // Vérifie que l'utilisateur est l'admin ou un collaborateur
+    if (project.admin.toString() !== req.user.id && !project.collaborators.includes(req.user.id)) {
+      return res.status(403).json({ message: "You are not authorized to view this project" });
+    }
+
+    res.status(200).json(project);
+  } catch (error) {
+    console.error("Error fetching project details:", error);
+    res.status(500).json({ message: "Error fetching project details", error: error.message });
+  }
+});
+
+
+  //edit project
+  router.put("/edit/:id", authMiddleware, async (req, res) => {
+    try {
+      const { id } = req.params; // ID du projet à modifier
+      const { name, description, start_date, end_date, priority, status, collaborators } = req.body;
+  
+      // Vérifier si le projet existe
+      const project = await Project.findById(id);
+      if (!project) {
+        return res.status(404).json({ message: "Project not found" });
+      }
+  
+      // Vérifier si l'utilisateur est l'admin du projet
+      if (project.admin.toString() !== req.user.id) {
+        return res.status(403).json({ message: "You are not authorized to edit this project" });
+      }
+  
+      // Mettre à jour les champs du projet
+      project.name = name || project.name;
+      project.description = description || project.description;
+      project.start_date = start_date || project.start_date;
+      project.end_date = end_date || project.end_date;
+      project.priority = priority || project.priority;
+      project.status = status || project.status;
+  
+      // Gestion des collaborateurs
+      if (collaborators && collaborators.length > 0) {
+        const newCollaborators = [];
+        for (const email of collaborators) {
+          const user = await User.findOne({ email });
+          if (user) {
+            newCollaborators.push(user._id);
+  
+            // Vérifier si une invitation existe déjà pour cet utilisateur
+            const existingInvitation = await Invitation.findOne({
+              project: project._id,
+              inviteeEmail: email,
+            });
+  
+            if (!existingInvitation) {
+              // Créer une nouvelle invitation
+              const newInvitation = new Invitation({
+                project: project._id,
+                inviterEmail: req.user.email,
+                inviteeEmail: email,
+              });
+              await newInvitation.save();
+            }
+          } else {
+            console.warn(`User with email ${email} not found. Skipping invitation.`);
+          }
+        }
+  
+        // Mettre à jour la liste des collaborateurs
+        project.collaborators = [...new Set([...project.collaborators, ...newCollaborators])];
+      }
+  
+      // Sauvegarder les modifications
+      await project.save();
+  
+      res.status(200).json({ message: "Project updated successfully", project });
+    } catch (error) {
+      console.error("Error updating project:", error);
+      res.status(500).json({ message: "Error updating project", error: error.message });
+    }
+  });
+
+//delete project
 router.delete('/delete/:id', async (req, res) => {
   try {
       const { id } = req.params;
