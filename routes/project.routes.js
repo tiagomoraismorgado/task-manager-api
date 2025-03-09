@@ -6,6 +6,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
+//new project
 router.post("/new", authMiddleware, async (req, res) => {
   try {
       const { name, description, start_date, end_date, priority, status } = req.body;
@@ -39,18 +40,21 @@ router.get("/all", authMiddleware, async (req, res) => {
   }
 });
 
-//view details project
-router.get("/project/:id", authMiddleware, async (req, res) => {
+
+// View project details
+router.get('/projects/:id', async (req, res) => {
   try {
-    const project = await Project.findById(req.params.id);
+    const project = await Project.findById(req.params.id); // Récupérer le projet par son ID
     if (!project) {
-      return res.status(404).json({ message: "Project not found" });
+      return res.status(404).json({ message: "Projet introuvable" });
     }
-    res.json(project); // Renvoyer les données du projet au format JSON
+    res.json(project); // Renvoyer les données du projet
   } catch (error) {
-    res.status(500).json({ message: "Error fetching project", error: error.message });
+    console.error("Erreur dans la récupération du projet :", error);
+    res.status(500).json({ message: "Erreur interne du serveur" });
   }
 });
+
 
 
 // GET /api/projects/:id

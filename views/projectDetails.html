@@ -166,64 +166,74 @@
           </div>
         </div>
          
-        <div class="card-header bg-white border-bottom-0 py-4">
-          <h4 class="mb-0">Detail Project</h4>
+        
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-12">
+                     
+                      <h4 class="mb-0">Detail Project</h4>
+                    </div>
+
+          <p><strong>Name :</strong> <span id="projectName"></span></p>
+          <p><strong>Descreption:</strong> <span id="projectDescription"></span></p>
+          <p><strong>Start Date :</strong> <span id="projectStartDate"></span></p>
+          <p><strong>End Date :</strong> <span id="projectEndDate"></span></p>
+          <p><strong>Statut :</strong> <span id="projectStatus"></span></p>
+          <p><strong>Priority :</strong> <span id="projectCreatedAt"></span></p>
+       
+
         </div>
 
-        <div id="projectDetails">
-          <!-- Les détails du projet seront injectés ici via JavaScript -->
-          <p>Loading project details...</p>
-        </div>
+        
         
       </div>
     </div>
   </div>
 
+
+
   <!-- Scripts -->
 <script>
-  // Récupère l'ID du projet depuis l'URL
-const projectId = window.location.pathname.split('/').pop();
+  // Récupérer l'ID du projet depuis l'URL
+  const projectId = window.location.pathname.split("/").pop();
+  const token = localStorage.getItem("token"); // Récupération du token JWT
 
-// Fonction pour récupérer les détails du projet depuis l'API
-async function fetchProjectDetails() {
-  try {
-    const response = await fetch(`/api/projects/${projectId}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`, // Ajoute le token d'authentification
-      },
-    });
+  // Fonction pour récupérer les détails du projet
+  async function fetchProjectDetails() {
+    try {
+      const response = await fetch(`/api/projects/${projectId}`, {
+        method: "GET",
+        headers: { "Authorization": `Bearer ${token}` },
+      });
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch project details');
+      if (!response.ok) {
+        throw new Error("Erreur lors de la récupération des détails du projet.");
+      }
+
+      const project = await response.json();
+
+      // Mise à jour du DOM avec les détails du projet
+      document.getElementById("projectName").textContent = project.name || "Non défini";
+      document.getElementById("projectDescription").textContent = project.description || "Aucune description";
+      document.getElementById("projectStartDate").textContent = project.start_date ? project.start_date.split("T")[0] : "Non défini";
+      document.getElementById("projectStatus").textContent = project.status || "En cours";
+
+    } catch (error) {
+      console.error("Erreur :", error);
+      alert("Impossible de charger les détails du projet.");
     }
-
-    const project = await response.json();
-    displayProjectDetails(project); // Afficher les détails du projet
-  } catch (error) {
-    console.error('Error fetching project details:', error);
-    document.getElementById('projectDetails').innerHTML = `<p class="text-danger">Error loading project details: ${error.message}</p>`;
   }
-}
 
-// Fonction pour afficher les détails du projet
-function displayProjectDetails(project) {
-  const projectDetails = document.getElementById('projectDetails');
-  projectDetails.innerHTML = `
-    <div class="project-info">
-      <h2>${project.name}</h2>
-      <p><strong>Description:</strong> ${project.description}</p>
-      <p><strong>Start Date:</strong> ${new Date(project.start_date).toLocaleDateString()}</p>
-      <p><strong>End Date:</strong> ${new Date(project.end_date).toLocaleDateString()}</p>
-      <p><strong>Priority:</strong> ${project.priority}</p>
-      <p><strong>Status:</strong> ${project.status}</p>
-    </div>
-   
-  `;
-}
-
-// Appelle la fonction pour récupérer les détails du projet au chargement de la page
-window.onload = fetchProjectDetails;
+  // Charger les détails du projet au chargement de la page
+  window.onload = fetchProjectDetails;
 </script>
+
+
+
 </body>
 
 </html>
