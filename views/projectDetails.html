@@ -9,7 +9,7 @@
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/theme.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-  <title>Edit Project | TaskHive</title>
+  <title>Details Project | TaskHive</title>
 </head>
 
 <body>
@@ -160,7 +160,7 @@
             <!-- Page Header -->
             <div class="d-flex justify-content-between align-items-center">
               <div class="mb-2 mb-lg-0">
-                <h3 class="mb-0 fw-bold text-white">Edit Project</h3>
+                <h3 class="mb-0 fw-bold text-white">Detail Project</h3>
               </div>
             </div>
           </div>
@@ -216,11 +216,7 @@
         document.getElementById("updatePriority").value = project.priority;
         document.getElementById("updateStatus").value = project.status;
 
-        // Si vous avez un champ pour les collaborateurs
-        if (project.collaborators && project.collaborators.length > 0) {
-          const collaboratorsList = project.collaborators.join(", ");
-          document.getElementById("updateCollaborators").value = collaboratorsList;
-        }
+       
       }
     }
 
@@ -238,7 +234,6 @@
         end_date: document.getElementById("updateEndDate").value,
         priority: document.getElementById("updatePriority").value,
         status: document.getElementById("updateStatus").value,
-        collaborators: document.getElementById("updateCollaborators").value.split(",").map(email => email.trim()),
       };
 
       try {
