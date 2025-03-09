@@ -169,104 +169,61 @@
         <div class="card-header bg-white border-bottom-0 py-4">
           <h4 class="mb-0">Detail Project</h4>
         </div>
-        <!-- details project -->
-        <div class="card-body bg-white border-bottom-0 py-4">
-        
+
+        <div id="projectDetails">
+          <!-- Les détails du projet seront injectés ici via JavaScript -->
+          <p>Loading project details...</p>
         </div>
+        
       </div>
     </div>
   </div>
 
   <!-- Scripts -->
-  <script>
-    // Récupère l'ID du projet depuis l'URL
-    const projectId = window.location.pathname.split("/").pop();
+<script>
+  // Récupère l'ID du projet depuis l'URL
+const projectId = window.location.pathname.split('/').pop();
 
-    // Fonction pour récupérer les détails du projet
-    async function fetchProjectDetails() {
-      const token = localStorage.getItem("token"); // Récupère le token d'authentification
-
-      try {
-        const response = await fetch(`/api/projects/${projectId}`, {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch project details");
-        }
-
-        const project = await response.json();
-        return project; // Retourne les données du projet
-      } catch (error) {
-        console.error("Error fetching project details:", error);
-        alert("Failed to load project details");
-      }
-    }
-
-    // Fonction pour pré-remplir le formulaire
-    async function populateForm() {
-      const project = await fetchProjectDetails(); // Récupère les détails du projet
-
-      if (project) {
-        // Remplit les champs du formulaire
-        document.getElementById("updateName").value = project.name;
-        document.getElementById("updateDescription").value = project.description;
-        document.getElementById("updateStartDate").value = project.start_date.split('T')[0];
-        document.getElementById("updateEndDate").value = project.end_date.split('T')[0];
-        document.getElementById("updatePriority").value = project.priority;
-        document.getElementById("updateStatus").value = project.status;
-
-       
-      }
-    }
-
-    // Fonction pour soumettre le formulaire de mise à jour
-    document.getElementById("updateProjectForm").addEventListener("submit", async (e) => {
-      e.preventDefault(); // Empêche le rechargement de la page
-
-      const token = localStorage.getItem("token");
-
-      // Récupère les données du formulaire
-      const formData = {
-        name: document.getElementById("updateName").value,
-        description: document.getElementById("updateDescription").value,
-        start_date: document.getElementById("updateStartDate").value,
-        end_date: document.getElementById("updateEndDate").value,
-        priority: document.getElementById("updatePriority").value,
-        status: document.getElementById("updateStatus").value,
-      };
-
-      try {
-        // Envoie une requête PUT à l'API pour mettre à jour le projet
-        const response = await fetch(`/api/projects/edit/${projectId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Failed to update project");
-        }
-
-        // Affiche un message de succès et redirige vers la page des projets
-        alert("Project updated successfully");
-        window.location.href = "/projects";
-      } catch (error) {
-        console.error("Error updating project:", error);
-        alert("Failed to update project");
-      }
+// Fonction pour récupérer les détails du projet depuis l'API
+async function fetchProjectDetails() {
+  try {
+    const response = await fetch(`/api/projects/${projectId}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`, // Ajoute le token d'authentification
+      },
     });
 
-    // Appelle la fonction pour remplir le formulaire au chargement de la page
-    window.onload = populateForm;
-  </script>
+    if (!response.ok) {
+      throw new Error('Failed to fetch project details');
+    }
+
+    const project = await response.json();
+    displayProjectDetails(project); // Afficher les détails du projet
+  } catch (error) {
+    console.error('Error fetching project details:', error);
+    document.getElementById('projectDetails').innerHTML = `<p class="text-danger">Error loading project details: ${error.message}</p>`;
+  }
+}
+
+// Fonction pour afficher les détails du projet
+function displayProjectDetails(project) {
+  const projectDetails = document.getElementById('projectDetails');
+  projectDetails.innerHTML = `
+    <div class="project-info">
+      <h2>${project.name}</h2>
+      <p><strong>Description:</strong> ${project.description}</p>
+      <p><strong>Start Date:</strong> ${new Date(project.start_date).toLocaleDateString()}</p>
+      <p><strong>End Date:</strong> ${new Date(project.end_date).toLocaleDateString()}</p>
+      <p><strong>Priority:</strong> ${project.priority}</p>
+      <p><strong>Status:</strong> ${project.status}</p>
+    </div>
+   
+  `;
+}
+
+// Appelle la fonction pour récupérer les détails du projet au chargement de la page
+window.onload = fetchProjectDetails;
+</script>
 </body>
 
 </html>
