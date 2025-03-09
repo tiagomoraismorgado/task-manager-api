@@ -2,13 +2,14 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" type="image/x-icon" href="/images/favicon/favicon.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/theme.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.css" rel="stylesheet">
   <title>Edit Project | TaskHive</title>
 </head>
 
@@ -17,11 +18,9 @@
     <!-- Sidebar -->
     <nav class="navbar-vertical navbar">
       <div class="nav-scroller">
-        <!-- Brand logo -->
         <a class="navbar-brand" href="/dashboard">
-          <img src="/images/brand/logo/logo.svg" alt="" />
+          <img src="/images/brand/logo/logo.svg" alt="TaskHive Logo" />
         </a>
-        <!-- Navbar nav -->
         <ul class="navbar-nav flex-column" id="sideNavbar">
           <li class="nav-item">
             <a class="nav-link" href="/dashboard">
@@ -40,17 +39,17 @@
           </li>
           <li class="nav-item">
             <a class="nav-link has-arrow active" href="/projects">
-              <i class='bx bx-objects-horizontal-left me-2'></i> Projects
+              <i class='bx bx-objects-horizontal-left me-2'></i>Projects
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link has-arrow" href="workspace.html">
-              <i class='bx bx-group me-2'></i> My workspace
+              <i class='bx bx-group me-2'></i>My workspace
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link has-arrow" href="reports.html">
-              <i class='bx bx-network-chart me-2'></i> Reports
+              <i class='bx bx-network-chart me-2'></i>Reports
             </a>
           </li>
         </ul>
@@ -60,51 +59,32 @@
     <!-- Page content -->
     <div id="page-content">
       <div class="header">
-        <!-- Navbar -->
         <nav class="navbar-classic navbar navbar-expand-lg">
           <a id="nav-toggle" href="#"><i data-feather="menu" class="nav-icon me-2 icon-xs"></i></a>
           <div class="ms-lg-3 d-none d-md-none d-lg-block">
-            <!-- Search Form -->
             <form class="d-flex align-items-center">
               <input type="search" class="form-control" placeholder="Search" />
             </form>
           </div>
-          <!-- Navbar Right -->
           <ul class="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
             <li class="dropdown stopevent">
-              <a class="btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted" href="#" role="button" id="dropdownNotification" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted" href="#"
+                role="button" id="dropdownNotification" data-bs-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
                 <i class="icon-xs" data-feather="bell"></i>
               </a>
-              <!-- Dropdown Notifications -->
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end" aria-labelledby="dropdownNotification">
                 <div class="border-bottom px-3 pt-2 pb-3 d-flex justify-content-between align-items-center">
                   <p class="mb-0 text-dark fw-medium fs-4">Notifications</p>
-                  <a href="#" class="text-muted">
-                    <span>
-                      <i class="me-1 icon-xxs" data-feather="settings"></i>
-                    </span>
-                  </a>
+                  <a href="#" class="text-muted"><span><i class="me-1 icon-xxs" data-feather="settings"></i></span></a>
                 </div>
                 <ul class="list-group list-group-flush notification-list-scroll">
-                  <li class="list-group-item bg-light">
-                    <a href="#" class="text-muted">
-                      <h5 class="fw-bold mb-1">Rishi Chopra</h5>
-                      <p class="mb-0">Mauris blandit erat id nunc blandit, ac eleifend dolor pretium.</p>
-                    </a>
-                  </li>
-                  <li class="list-group-item">
-                    <a href="#" class="text-muted">
-                      <h5 class="fw-bold mb-1">Neha Kannned</h5>
-                      <p class="mb-0">Proin at elit vel est condimentum elementum id in ante. Maecenas et sapien metus.</p>
-                    </a>
-                  </li>
+                  <li class="list-group-item bg-light"><a href="#" class="text-muted"><h5 class="fw-bold mb-1">Rishi Chopra</h5><p class="mb-0">Mauris blandit erat id nunc blandit, ac eleifend dolor pretium.</p></a></li>
+                  <li class="list-group-item"><a href="#" class="text-muted"><h5 class="fw-bold mb-1">Neha Kannned</h5><p class="mb-0">Proin at elit vel est condimentum elementum id in ante. Maecenas et sapien metus.</p></a></li>
                 </ul>
-                <div class="border-top px-3 py-2 text-center">
-                  <a href="#" class="text-inherit fw-semi-bold">View all Notifications</a>
-                </div>
+                <div class="border-top px-3 py-2 text-center"><a href="#" class="text-inherit fw-semi-bold">View all Notifications</a></div>
               </div>
             </li>
-            <!-- User Dropdown -->
             <li class="dropdown ms-2">
               <a class="rounded-circle" href="#" role="button" id="dropdownUser" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="avatar avatar-md avatar-indicators avatar-online">
@@ -120,31 +100,11 @@
                   <div class="dropdown-divider mt-3 mb-2"></div>
                 </div>
                 <ul class="list-unstyled">
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      <i class="me-2 icon-xxs dropdown-item-icon" data-feather="user"></i>Edit Profile
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      <i class="me-2 icon-xxs dropdown-item-icon" data-feather="activity"></i>Activity Log
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item text-primary" href="#">
-                      <i class="me-2 icon-xxs text-primary dropdown-item-icon" data-feather="star"></i>Go Pro
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      <i class="me-2 icon-xxs dropdown-item-icon" data-feather="settings"></i>Account Settings
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="@@webRoot/index.html">
-                      <i class="me-2 icon-xxs dropdown-item-icon" data-feather="power"></i>Sign Out
-                    </a>
-                  </li>
+                  <li><a class="dropdown-item" href="#"><i class="me-2 icon-xxs dropdown-item-icon" data-feather="user"></i>Edit Profile</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="me-2 icon-xxs dropdown-item-icon" data-feather="activity"></i>Activity Log</a></li>
+                  <li><a class="dropdown-item text-primary" href="#"><i class="me-2 icon-xxs text-primary dropdown-item-icon" data-feather="star"></i>Go Pro</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="me-2 icon-xxs dropdown-item-icon" data-feather="settings"></i>Account Settings</a></li>
+                  <li><a class="dropdown-item" href="/logout"><i class="me-2 icon-xxs dropdown-item-icon" data-feather="power"></i>Sign Out</a></li>
                 </ul>
               </div>
             </li>
@@ -157,177 +117,182 @@
       <div class="container-fluid mt-n22 px-6">
         <div class="row">
           <div class="col-lg-12 col-md-12 col-12">
-            <!-- Page Header -->
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="mb-2 mb-lg-8">
-                <h3 class="mb-0 fw-bold text-white">Projects</h3>
-              </div>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="mb-0 fw-bold text-white">Projects</h3>
             </div>
           </div>
         </div>
-        <div class="card-header bg-white border-bottom-0 py-4">
-          <h4 class="mb-0">Edit Project</h4>
-        </div>
-        <!-- Update Form -->
-        <div class="card-body bg-white border-bottom-0 py-4">
-          <form id="updateProjectForm" class="row g-3 needs-validation" novalidate>
-            <!-- Project Name -->
-            <div class="mb-3">
-              <label class="form-label" for="updateName">Name</label>
-              <input type="text" id="updateName" name="name" class="form-control" placeholder="Enter project title" required>
-            </div>
+        <div class="card">
+          <div class="card-header bg-white border-bottom-0 py-4">
+            <h4 class="mb-0">Edit Project</h4>
+          </div>
+          <div class="card-body">
+            <form id="updateProjectForm" class="row g-3 needs-validation" novalidate>
+              <div class="mb-3">
+                <label class="form-label" for="updateName">Name</label>
+                <input type="text" id="updateName" name="name" class="form-control" placeholder="Enter project title" required>
+              </div>
 
-            <!-- Project Description -->
-            <div class="mb-3">
-              <label for="updateDescription" class="form-label">Description</label>
-              <textarea class="form-control" id="updateDescription" name="description" rows="5"
-                placeholder="Type something here"></textarea>
-            </div>
+              <div class="mb-3">
+                <label for="updateDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="updateDescription" name="description" rows="5" placeholder="Type something here"></textarea>
+              </div>
 
-            <!-- Start Date -->
-            <div class="col-md-6">
-              <label for="updateStartDate" class="form-label">Start Date</label>
-              <input type="date" class="form-control" id="updateStartDate" name="start_date" required>
-            </div>
+              <div class="col-md-6">
+                <label for="updateStartDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="updateStartDate" name="start_date" required>
+              </div>
 
-            <!-- End Date -->
-            <div class="col-md-6">
-              <label for="updateEndDate" class="form-label">End Date</label>
-              <input type="date" class="form-control" id="updateEndDate" name="end_date" required>
-            </div>
+              <div class="col-md-6">
+                <label for="updateEndDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="updateEndDate" name="end_date" required>
+              </div>
 
-            <!-- Priority -->
-            <div class="col-md-6">
-              <label for="updatePriority" class="form-label">Priority</label>
-              <select class="form-select" id="updatePriority" name="priority" required>
-                <option selected disabled value="">Set Priority</option>
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
-              </select>
-            </div>
+              <div class="col-md-6">
+                <label for="updatePriority" class="form-label">Priority</label>
+                <select class="form-select" id="updatePriority" name="priority" required>
+                  <option selected disabled value="">Set Priority</option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+              </div>
 
-            <!-- Status -->
-            <div class="col-md-6">
-              <label for="updateStatus" class="form-label">Status</label>
-              <select class="form-select" id="updateStatus" name="status" required>
-                <option selected disabled value="">Set Status</option>
-                <option value="Ongoing">Ongoing</option>
-                <option value="Completed">Completed</option>
-                <option value="Cancelled">Cancelled</option>
-              </select>
-            </div>
+              <div class="col-md-6">
+                <label for="updateStatus" class="form-label">Status</label>
+                <select class="form-select" id="updateStatus" name="status" required>
+                  <option selected disabled value="">Set Status</option>
+                  <option value="Ongoing">Ongoing</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
 
-          
-
-            <!-- Submit Button -->
-            <div class="col-12">
-              <button class="btn btn-primary" type="submit">Update Project</button>
-              <button class="btn btn-secondary" type="button" id="cancelButton">Cancel</button>
-
-            </div>
-          </form>
+              <div class="col-12">
+                <button class="btn btn-primary" type="submit">Update Project</button>
+                <button class="btn btn-secondary" type="button" id="cancelButton">Cancel</button>
+                <div id="loading" class="spinner-border text-primary d-none" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div id="errorMessage" class="alert alert-danger d-none" role="alert"></div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script>
     // Récupère l'ID du projet depuis l'URL
-    const projectId = window.location.pathname.split("/").pop();
+    const projectId = window.location.pathname.split('/').pop();
 
     // Fonction pour récupérer les détails du projet
     async function fetchProjectDetails() {
-      const token = localStorage.getItem("token"); // Récupère le token d'authentification
+      const token = localStorage.getItem('token');
+      const loadingElement = document.getElementById('loading');
+      const errorElement = document.getElementById('errorMessage');
+
+      loadingElement.classList.remove('d-none');
 
       try {
-        const response = await fetch(`/api/projects/${projectId}`, {
-          method: "GET",
+        const response = await fetch(`/api/projects/view/${projectId}`, {
+          method: 'GET',
           headers: {
-            "Authorization": `Bearer ${token}`,
-          },
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
         });
 
         if (!response.ok) {
-          throw new Error("Failed to fetch project details");
+          const errorData = await response.json();
+          throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
         }
 
         const project = await response.json();
-        return project; // Retourne les données du projet
+        return project;
       } catch (error) {
-        console.error("Error fetching project details:", error);
-        alert("Failed to load project details");
+        console.error('Error fetching project details:', error);
+        errorElement.textContent = error.message;
+        errorElement.classList.remove('d-none');
+        return null;
+      } finally {
+        loadingElement.classList.add('d-none');
       }
     }
 
     // Fonction pour pré-remplir le formulaire
     async function populateForm() {
-      const project = await fetchProjectDetails(); // Récupère les détails du projet
-
+      const project = await fetchProjectDetails();
       if (project) {
-        // Remplit les champs du formulaire
-        document.getElementById("updateName").value = project.name;
-        document.getElementById("updateDescription").value = project.description;
-        document.getElementById("updateStartDate").value = project.start_date.split('T')[0];
-        document.getElementById("updateEndDate").value = project.end_date.split('T')[0];
-        document.getElementById("updatePriority").value = project.priority;
-        document.getElementById("updateStatus").value = project.status;
-
-      
+        document.getElementById('updateName').value = project.name || '';
+        document.getElementById('updateDescription').value = project.description || '';
+        document.getElementById('updateStartDate').value = project.start_date ? project.start_date.split('T')[0] : '';
+        document.getElementById('updateEndDate').value = project.end_date ? project.end_date.split('T')[0] : '';
+        document.getElementById('updatePriority').value = project.priority || '';
+        document.getElementById('updateStatus').value = project.status || '';
       }
     }
 
     // Fonction pour soumettre le formulaire de mise à jour
-    document.getElementById("updateProjectForm").addEventListener("submit", async (e) => {
-      e.preventDefault(); // Empêche le rechargement de la page
+    document.getElementById('updateProjectForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
+      const loadingElement = document.getElementById('loading');
+      const errorElement = document.getElementById('errorMessage');
 
-      // Récupère les données du formulaire
+      loadingElement.classList.remove('d-none');
+
       const formData = {
-        name: document.getElementById("updateName").value,
-        description: document.getElementById("updateDescription").value,
-        start_date: document.getElementById("updateStartDate").value,
-        end_date: document.getElementById("updateEndDate").value,
-        priority: document.getElementById("updatePriority").value,
-        status: document.getElementById("updateStatus").value
+        name: document.getElementById('updateName').value,
+        description: document.getElementById('updateDescription').value,
+        start_date: document.getElementById('updateStartDate').value,
+        end_date: document.getElementById('updateEndDate').value,
+        priority: document.getElementById('updatePriority').value,
+        status: document.getElementById('updateStatus').value
       };
 
       try {
-        // Envoie une requête PUT à l'API pour mettre à jour le projet
         const response = await fetch(`/api/projects/edit/${projectId}`, {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(formData)
         });
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.message || "Failed to update project");
+          throw new Error(errorData.message || 'Failed to update project');
         }
 
-        // Affiche un message de succès et redirige vers la page des projets
-        alert("Project updated successfully");
-        window.location.href = "/projects";
+        const result = await response.json();
+        alert('Project updated successfully');
+        window.location.href = '/projects';
       } catch (error) {
-        console.error("Error updating project:", error);
-        alert("Failed to update project");
+        console.error('Error updating project:', error);
+        errorElement.textContent = error.message;
+        errorElement.classList.remove('d-none');
+      } finally {
+        loadingElement.classList.add('d-none');
       }
     });
 
-
-
     // Gestionnaire d'événements pour le bouton "Cancel"
-    document.getElementById("cancelButton").addEventListener("click", () => {
-      window.location.href = "/projects"; // Redirige vers la page des projets
+    document.getElementById('cancelButton').addEventListener('click', () => {
+      window.location.href = '/projects';
     });
 
     // Appelle la fonction pour remplir le formulaire au chargement de la page
     window.onload = populateForm;
+
+    // Initialise les icônes Feather
+    feather.replace();
   </script>
 </body>
 
