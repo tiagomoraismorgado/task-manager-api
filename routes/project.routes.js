@@ -41,39 +41,31 @@ router.get("/all", authMiddleware, async (req, res) => {
 });
 
 
-// View project details
-router.get('/projects/:id', async (req, res) => {
-  try {
-    const project = await Project.findById(req.params.id); // Récupérer le projet par son ID
-    if (!project) {
-      return res.status(404).json({ message: "Projet introuvable" });
-    }
-    res.json(project); // Renvoyer les données du projet
-  } catch (error) {
-    console.error("Erreur dans la récupération du projet :", error);
-    res.status(500).json({ message: "Erreur interne du serveur" });
-  }
-});
+
 
 // View project details with authorization
+// Enhanced project details route
 router.get('/projects/:id', authMiddleware, async (req, res) => {
   try {
-    // Find project by ID and populate admin details
     const project = await Project.findById(req.params.id)
-      .populate('admin', 'username email') // Populate admin's basic info
-      .lean(); // Convert to plain JavaScript object
+      .populate('admin', 'username email')
+      .populate('tasks', 'title status dueDate') // Added tasks population
+      .lean();
 
     if (!project) {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    // Optional: Check if user has permission to view this project
-    // Assuming admin is stored as an ObjectId reference
+    // Check if user is the admin of the project
     if (project.admin._id.toString() !== req.user.id) {
       return res.status(403).json({ 
         message: "Unauthorized: You don't have permission to view this project" 
       });
     }
+
+    // Format dates for better frontend handling
+    project.start_date = project.start_date.toISOString().split('T')[0];
+    project.end_date = project.end_date.toISOString().split('T')[0];
 
     res.status(200).json({
       message: "Project details retrieved successfully",
@@ -89,6 +81,8 @@ router.get('/projects/:id', authMiddleware, async (req, res) => {
 });
 
 
+
+ 
 
   //edit project
   router.put("/edit/:id", authMiddleware, async (req, res) => {
