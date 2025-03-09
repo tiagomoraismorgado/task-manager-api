@@ -80,7 +80,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link has-arrow " href="tasks.html">
+            <a class="nav-link has-arrow " href="/myTaskes">
               <i class='bx bx-check-circle me-2'></i>My tasks
             </a>
           </li>
@@ -377,157 +377,6 @@
               <div class="table-responsive">
                 <table class="table text-nowrap mb-0">
 
-                    <thead class="table-light">
-                        <tr>
-                            <th>Name</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Priority</th>
-                            <th>Status</th>
-                           
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="projectsTable">
-                        <script>
-                            async function fetchProjects() {
-                                const token = localStorage.getItem("token");
-                                const response = await fetch("/api/projects/all", {
-                                    method: "GET",
-                                    headers: {
-                                        "Authorization": `Bearer ${token}`,
-                                    },
-                                });
-            
-                                const projects = await response.json();
-                                const tableBody = document.getElementById("projectsTable");
-                                tableBody.innerHTML = "";
-            
-                                projects.forEach(project => {
-                                    const startDate = new Date(project.start_date);
-                                    const endDate = new Date(project.end_date);
-            
-                                    const formattedStartDate = startDate.toISOString().split('T')[0];
-                                    const formattedEndDate = endDate.toISOString().split('T')[0];
-                                    const row = `<tr>
-                                        <td>${project.name}</td>
-                                        <td>${formattedStartDate}</td>
-                                        <td>${formattedEndDate}</td>
-                                        <td>${project.priority}</td>
-                                        <td>${project.status}</td>
-                                       
-                                        <td>
-                                            <a href="javascript:void(0);" onclick="viewTasks('${project._id}')" class="btn btn-primary me-2">
-                                                <span class="icon-base bx bx-show"></span>
-                                            </a>
-                                            <a href="/projects/edit/${project._id}" class="btn btn-warning me-2">
-                                                <span class="icon-base bx bx-edit-alt"></span>
-                                            </a>
-                                            <button onclick="deleteProject('${project._id}')" class="btn btn-danger me-2">
-                                                <span class="icon-base bx bx-trash"></span>
-                                            </button>
-                                            <a href="/tasks.html?project_id=${project._id}" class="btn btn-primary me-2">
-                                                <span class="icon-base bx bx-plus me-1"></span>Task
-                                            </a>
-                                        </td>
-                                    </tr>`;
-                                    tableBody.innerHTML += row;
-                                });
-                            }
-            
-                            async function deleteProject(id) {
-                                const token = localStorage.getItem("token");
-                                const confirmDelete = confirm("Are you sure you want to delete this project?");
-                                if (confirmDelete) {
-                                    try {
-                                        const response = await fetch(`/api/projects/delete/${id}`, {
-                                            method: "DELETE",
-                                            headers: {
-                                                "Authorization": `Bearer ${token}`,
-                                            },
-                                        });
-            
-                                        if (response.ok) {
-                                            alert("Project deleted successfully");
-                                            fetchProjects(); // Refresh the project list
-                                        } else {
-                                            const errorData = await response.json();
-                                            alert(`Error: ${errorData.message}`);
-                                        }
-                                    } catch (error) {
-                                        alert("Error deleting project");
-                                        console.error(error);
-                                    }
-                                }
-                            }
-            
-                            fetchProjects();
-            
-                            // Fonction pour afficher les tâches du projet dans une modal
-                            async function viewTasks(projectId) {
-                                const response = await fetch(`/projects/${projectId}/tasks`);
-                                const tasks = await response.json();
-            
-                                // Vider la table des tâches avant d'ajouter de nouvelles données
-                                const taskList = document.getElementById("taskList");
-                                taskList.innerHTML = "";
-            
-                                // Ajouter les tâches dans le tableau
-                                tasks.forEach(task => {
-                                    const taskItem = document.createElement("tr");
-            
-                                    taskItem.innerHTML = `
-                                        <td>${task.title}</td>
-                                        <td>${task.description}</td>
-                                        <td>${task.start_date}</td>
-                                        <td>${task.end_date}</td>
-                                        <td>${task.priority}</td>
-                                        <td>${task.status}</td>
-                                        <td>${task.assigned_to}</td>
-                                    `;
-            
-                                    taskList.appendChild(taskItem);
-                                });
-            
-                                // Afficher la modal
-                                document.getElementById("tasksModal").style.display = "block";
-                            }
-            
-                            // Fonction pour fermer la modal
-                            function closeModal() {
-                                document.getElementById("tasksModal").style.display = "none";
-                            }
-                        </script>
-                    </tbody>
-                </table>
-            
-                <!-- Modal pour afficher les tâches -->
-                <div id="tasksModal" style="display: none;">
-                    <div id="modalContent">
-                        <h3>Tasks for Project</h3>
-                        <button onclick="closeModal()">Close</button>
-                        <table id="taskTable">
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Priority</th>
-                                    <th>Status</th>
-                                    <th>Assigned To</th>
-                                </tr>
-                            </thead>
-                            <tbody id="taskList">
-                                <!-- Les tâches seront affichées ici -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            
-            </div>
-            
-
                   <thead class="table-light">
                     <tr>
                       <th>Name</th>
@@ -581,36 +430,36 @@
                           }
 
                           const row = `<tr>
-                            <td>${project.name}</td>
-                            <td>${formattedStartDate}</td>
-                            <td>${formattedEndDate}</td>
-                            <td>${project.priority}</td>
-                            <td><span class="status-badge ${statusClass}">${project.status}</span></td>
-                            <td>
-                              <a href="/projects/view/${project._id}" class="btn btn-icon me-2 btn-primary">
-                                <span class="icon-base bx bx-show" style="color:#fff;"></span>
-                              </a>
-                              <a href="/projects/edit/${project._id}" class="btn btn-icon me-2 btn-warning">
-                                <span class="icon-base bx bx-edit-alt" style="color:#fff;"></span>
-                              </a>
-                              <button onclick="deleteProject('${project._id}')" class="btn btn-icon me-2 btn-danger">
-                                <span class="icon-base bx bx-trash" style="color:#fff;"></span>
-                              </button>
-                              <a href="/task" class="btn btn-primary me-2">
-                                <span class="icon-base bx bx-plus me-1"></span>Task
-                              </a>
-                            </td>
-                          </tr>`;
+                                <td>${project.name}</td>
+                                <td>${formattedStartDate}</td>
+                                <td>${formattedEndDate}</td>
+                                <td>${project.priority}</td>
+                                <td><span class="status-badge ${statusClass}">${project.status}</span></td>
+                                <td>
+                                                <a href="javascript:void(0);" onclick="viewTasks('${project._id}')" class="btn btn-primary me-2">
+                                                    <span class="icon-base bx bx-show"></span>
+                                                </a>
+                                                <a href="/projects/edit/${project._id}" class="btn btn-warning me-2">
+                                                    <span class="icon-base bx bx-edit-alt" style="color:#fff"></span>
+                                                </a>
+                                                <button onclick="deleteProject('${project._id}')" class="btn btn-danger me-2">
+                                                    <span class="icon-base bx bx-trash"></span>
+                                                </button>
+                                                <a href="/tasks?project_id=${project._id}" class="btn btn-primary me-2">
+                                                    <span class="icon-base bx bx-plus me-1"></span>Task
+                                                </a>
+                                </td>
+                              </tr>`;
                           tableBody.innerHTML += row;
                         });
                       }
                       function showAlert(message, type) {
                         const alertContainer = document.getElementById("alertContainer");
                         alertContainer.innerHTML = `
-                          <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-                            ${message}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                          </div>`;
+                              <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                                ${message}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                              </div>`;
 
                         // Auto-hide alert after 3 seconds
                         setTimeout(() => {
@@ -646,18 +495,18 @@
                       fetchProjects();
                     </script>
                   </tbody>
-                </table>
-              </div>
+              </table>
+            </div>
 
-              <!-- card footer  -->
-              <div class="card-footer bg-white text-center">
-                <a href="#"></a>
-              </div>
+            <!-- card footer  -->
+            <div class="card-footer bg-white text-center">
+              <a href="#"></a>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <!-- Scripts -->
