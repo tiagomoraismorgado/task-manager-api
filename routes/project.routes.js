@@ -86,65 +86,6 @@ router.get("/view/:id", authMiddleware, async (req, res) => {
   }
 });
 
-
-
-// Route GET /api/projects/:id
-router.get("/:id", authMiddleware, async (req, res) => {
-  try {
-    // Vérification de l'ID pour s'assurer qu'il est valide (format ObjectId)
-    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(400).json({ message: "Invalid project ID format" });
-    }
-
-    // Recherche du projet avec population des collaborateurs
-    const project = await Project.findById(req.params.id)
-      .populate("collaborators", "email name") // Récupère email et nom des collaborateurs
-      .exec();
-
-    // Vérification si le projet existe
-    if (!project) {
-      return res.status(404).json({ message: "Project not found" });
-    }
-
-    // Préparation des données à renvoyer (ajout d'une structure personnalisée si nécessaire)
-    const projectResponse = {
-      id: project._id,
-      name: project.name,
-      description: project.description,
-      status: project.status,
-      start_date: project.start_date,
-      end_date: project.end_date,
-      priority: project.priority,
-      collaborators: project.collaborators,
-      tasks: project.tasks || [], // Assurez-vous que tasks est défini
-      createdAt: project.createdAt,
-      updatedAt: project.updatedAt
-    };
-
-    // Réponse avec statut 200
-    res.status(200).json(projectResponse);
-
-  } catch (error) {
-    // Gestion des erreurs spécifiques
-    console.error("Error fetching project details:", error);
-
-    // Si l'erreur est une ValidationError de Mongoose
-    if (error.name === 'CastError') {
-      return res.status(400).json({ message: "Invalid project ID" });
-    }
-
-    // Réponse générique pour les erreurs serveur
-    res.status(500).json({
-      message: "Error fetching project details",
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
-  }
-});
-
-
-
- 
-
   //edit project
   router.put("/edit/:id", authMiddleware, async (req, res) => {
     try {
