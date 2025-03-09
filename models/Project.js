@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const projectSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    description: String,
+    description: {type: String},
     start_date: { type: Date, required: true },
     end_date: { type: Date, required: true },
     priority: { type: String, enum: ["Low", "Medium", "High"], default: "Medium" },
