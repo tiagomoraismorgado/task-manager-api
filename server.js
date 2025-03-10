@@ -26,7 +26,6 @@ app.get("/dashboard", (req, res) => res.sendFile(path.join(__dirname, "views", "
 app.get("/projects", (req, res) => res.sendFile(path.join(__dirname, "views", "projects", "projects.html")));
 app.get("/tasks", (req, res) => res.sendFile(path.join(__dirname, "views", "tasks", "tasks.html")));
 app.get("/new_project", (req, res) => res.sendFile(path.join(__dirname, "views", "projects", "createProject.html")));
-app.get("/createTask", (req, res) => res.sendFile(path.join(__dirname, "views", "tasks", "createTask.html")));
 
 // Route pour afficher la page d'édition
 app.get('/projects/edit/:id', (req, res) => {
