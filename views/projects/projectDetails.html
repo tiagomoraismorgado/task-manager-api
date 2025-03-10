@@ -9,12 +9,14 @@
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/theme.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <!-- Added missing Feather icons CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.css" rel="stylesheet">
   <title>Details Project | TaskHive</title>
 </head>
 
 <body>
   <div id="db-wrapper">
-    <!-- Sidebar -->
+    <!-- Sidebar (unchanged) -->
     <nav class="navbar-vertical navbar">
       <div class="nav-scroller">
         <!-- Brand logo -->
@@ -60,7 +62,7 @@
     <!-- Page content -->
     <div id="page-content">
       <div class="header">
-        <!-- Navbar -->
+        <!-- Navbar (unchanged) -->
         <nav class="navbar-classic navbar navbar-expand-lg">
           <a id="nav-toggle" href="#"><i data-feather="menu" class="nav-icon me-2 icon-xs"></i></a>
           <div class="ms-lg-3 d-none d-md-none d-lg-block">
@@ -72,7 +74,9 @@
           <!-- Navbar Right -->
           <ul class="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
             <li class="dropdown stopevent">
-              <a class="btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted" href="#" role="button" id="dropdownNotification" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted" href="#"
+                role="button" id="dropdownNotification" data-bs-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
                 <i class="icon-xs" data-feather="bell"></i>
               </a>
               <!-- Dropdown Notifications -->
@@ -106,7 +110,8 @@
             </li>
             <!-- User Dropdown -->
             <li class="dropdown ms-2">
-              <a class="rounded-circle" href="#" role="button" id="dropdownUser" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="rounded-circle" href="#" role="button" id="dropdownUser" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <div class="avatar avatar-md avatar-indicators avatar-online">
                   <img alt="avatar" src="/images/avatar/avatar-1.jpg" class="rounded-circle" />
                 </div>
@@ -152,118 +157,141 @@
         </nav>
       </div>
 
-      <!-- Main Content -->
-      <div class="bg-primary pt-10 pb-21"></div>
-      <div class="container-fluid mt-n22 px-6">
+    <!-- Main Content -->
+    <div class="bg-primary pt-10 pb-21"></div>
+    <div class="container-fluid mt-n22 px-6">
         <div class="row">
-          <div class="col-lg-12 col-md-12 col-12">
-            <!-- Page Header -->
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="mb-2 mb-lg-0">
-                <h3 class="mb-0 fw-bold text-white">Detail Project</h3>
-              </div>
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="mb-0 fw-bold text-white">Project</h3>
+                    <a href="/projects" class="btn btn-light">Back to Projects</a>
+                </div>
             </div>
-          </div>
         </div>
 
-        <!-- details project -->
-        <div class="card-body bg-white border-bottom-0 py-4">
-        
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mb-4">Project Information</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <p><strong>Name:</strong> <span id="projectName" class="text-muted"></span></p>
+                                <p><strong>Description:</strong> <span id="projectDescription" class="text-muted"></span></p>
+                                <p><strong>Status:</strong> <span id="projectStatus" class="text-muted"></span></p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <p><strong>Start Date:</strong> <span id="projectStartDate" class="text-muted"></span></p>
+                                <p><strong>End Date:</strong> <span id="projectEndDate" class="text-muted"></span></p>
+                                <p><strong>Priority:</strong> <span id="projectPriority" class="text-muted"></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Tasks Section -->
+                        <h5 class="mt-4 mb-3">Tasks</h5>
+                        <ul id="tasksList" class="list-group mb-4"></ul>
+
+                        <!-- Loading state -->
+                        <div id="loading" class="text-center d-none">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+
+                        <!-- Error message -->
+                        <div id="errorMessage" class="alert alert-danger d-none" role="alert"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+</div>
 
-  <!-- Scripts -->
-  <script>
-    // Récupère l'ID du projet depuis l'URL
-    const projectId = window.location.pathname.split("/").pop();
 
-    // Fonction pour récupérer les détails du projet
-    async function fetchProjectDetails() {
-      const token = localStorage.getItem("token"); // Récupère le token d'authentification
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 
-      try {
-        const response = await fetch(`/api/projects/${projectId}`, {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-          },
-        });
+<script>
+  // Fonction pour formater les dates
+  const formatDate = (dateString) => {
+    if (!dateString) return 'Not set';
+    const date = new Date(dateString);
+    return isNaN(date.getTime()) ? 'Invalid date' : date.toLocaleDateString();
+  };
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch project details");
-        }
+  // Fonction pour mettre à jour l'UI
+  const updateProjectUI = (project) => {
+    document.getElementById('projectName').textContent = project.name || 'Not specified';
+    document.getElementById('projectDescription').textContent = project.description || 'No description';
+    document.getElementById('projectStatus').textContent = project.status || 'Unknown';
+    document.getElementById('projectStartDate').textContent = formatDate(project.start_date);
+    document.getElementById('projectEndDate').textContent = formatDate(project.end_date);
+    document.getElementById('projectPriority').textContent = project.priority || 'Not set';
 
-        const project = await response.json();
-        return project; // Retourne les données du projet
-      } catch (error) {
-        console.error("Error fetching project details:", error);
-        alert("Failed to load project details");
-      }
+    // Mise à jour des tâches
+    const tasksList = document.getElementById('tasksList');
+    tasksList.innerHTML = project.tasks && project.tasks.length > 0
+      ? project.tasks.map(task => `
+          <li class="list-group-item">
+            ${task.title || 'Untitled Task'} - 
+            <span class="badge ${task.status === 'completed' ? 'bg-success' : 'bg-warning'}">
+              ${task.status || 'pending'}
+            </span>
+          </li>
+        `).join('')
+      : '<li class="list-group-item">No tasks available</li>';
+  };
+
+  // Fonction pour récupérer les détails du projet
+  async function fetchProjectDetails() {
+    const urlParts = window.location.pathname.split('/');
+    const projectId = urlParts[urlParts.length - 1]; // Récupère le dernier segment (ex. 67cdc219d0e9bf0318422)
+    const loadingElement = document.getElementById('loading');
+    const errorElement = document.getElementById('errorMessage');
+
+    // Validation initiale
+    if (!projectId || projectId === 'view') {
+      errorElement.textContent = 'Project ID is missing or invalid in the URL';
+      errorElement.classList.remove('d-none');
+      loadingElement.classList.add('d-none');
+      return;
     }
 
-    // Fonction pour pré-remplir le formulaire
-    async function populateForm() {
-      const project = await fetchProjectDetails(); // Récupère les détails du projet
+    try {
+      loadingElement.classList.remove('d-none'); // Affiche le spinner
 
-      if (project) {
-        // Remplit les champs du formulaire
-        document.getElementById("updateName").value = project.name;
-        document.getElementById("updateDescription").value = project.description;
-        document.getElementById("updateStartDate").value = project.start_date.split('T')[0];
-        document.getElementById("updateEndDate").value = project.end_date.split('T')[0];
-        document.getElementById("updatePriority").value = project.priority;
-        document.getElementById("updateStatus").value = project.status;
-
-       
-      }
-    }
-
-    // Fonction pour soumettre le formulaire de mise à jour
-    document.getElementById("updateProjectForm").addEventListener("submit", async (e) => {
-      e.preventDefault(); // Empêche le rechargement de la page
-
-      const token = localStorage.getItem("token");
-
-      // Récupère les données du formulaire
-      const formData = {
-        name: document.getElementById("updateName").value,
-        description: document.getElementById("updateDescription").value,
-        start_date: document.getElementById("updateStartDate").value,
-        end_date: document.getElementById("updateEndDate").value,
-        priority: document.getElementById("updatePriority").value,
-        status: document.getElementById("updateStatus").value,
-      };
-
-      try {
-        // Envoie une requête PUT à l'API pour mettre à jour le projet
-        const response = await fetch(`/api/projects/edit/${projectId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Failed to update project");
+      const response = await fetch(`/api/projects/view/${projectId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
         }
+      });
 
-        // Affiche un message de succès et redirige vers la page des projets
-        alert("Project updated successfully");
-        window.location.href = "/projects";
-      } catch (error) {
-        console.error("Error updating project:", error);
-        alert("Failed to update project");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
-    });
 
-    // Appelle la fonction pour remplir le formulaire au chargement de la page
-    window.onload = populateForm;
-  </script>
+      const project = await response.json();
+      updateProjectUI(project); // Met à jour l'UI avec les données reçues
+
+    } catch (error) {
+      console.error('Error fetching project details:', error);
+      errorElement.textContent = `Error fetching project details: ${error.message}`;
+      errorElement.classList.remove('d-none');
+    } finally {
+      loadingElement.classList.add('d-none'); // Cache le spinner
+    }
+  }
+
+  // Initialisation
+  document.addEventListener('DOMContentLoaded', () => {
+    feather.replace(); // Initialise les icônes Feather
+    fetchProjectDetails(); // Charge les détails du projet
+  });
+</script>
 </body>
-
 </html>

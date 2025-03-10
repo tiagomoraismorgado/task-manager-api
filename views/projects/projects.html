@@ -53,7 +53,7 @@
 
   .status-canceled {
     background-color: #f8d7da;
-    color: #c82333;
+    color: #dc3545;
   }
 
   .status-pending {
@@ -431,8 +431,9 @@
                                 <td>${project.priority}</td>
                                 <td><span class="status-badge ${statusClass}">${project.status}</span></td>
                                 <td>
-                                                <a href="javascript:void(0);" onclick="viewTasks('${project._id}')" class="btn btn-primary me-2">
-                                                    <span class="icon-base bx bx-show"></span>
+                                            
+                                                <a href="/projects/view/${project._id}" class="btn btn-primary me-2">
+                                                      <span class="icon-base bx bx-show"></span>
                                                 </a>
                                                 <a href="/projects/edit/${project._id}" class="btn btn-warning me-2">
                                                     <span class="icon-base bx bx-edit-alt" style="color:#fff"></span>
