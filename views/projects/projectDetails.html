@@ -187,9 +187,7 @@
                             </div>
                         </div>
 
-                        <!-- Tasks Section -->
-                        <h5 class="mt-4 mb-3">Tasks</h5>
-                        <ul id="tasksList" class="list-group mb-4"></ul>
+                       
 
                         <!-- Loading state -->
                         <div id="loading" class="text-center d-none">
@@ -230,18 +228,7 @@
     document.getElementById('projectEndDate').textContent = formatDate(project.end_date);
     document.getElementById('projectPriority').textContent = project.priority || 'Not set';
 
-    // Mise à jour des tâches
-    const tasksList = document.getElementById('tasksList');
-    tasksList.innerHTML = project.tasks && project.tasks.length > 0
-      ? project.tasks.map(task => `
-          <li class="list-group-item">
-            ${task.title || 'Untitled Task'} - 
-            <span class="badge ${task.status === 'completed' ? 'bg-success' : 'bg-warning'}">
-              ${task.status || 'pending'}
-            </span>
-          </li>
-        `).join('')
-      : '<li class="list-group-item">No tasks available</li>';
+    
   };
 
   // Fonction pour récupérer les détails du projet
